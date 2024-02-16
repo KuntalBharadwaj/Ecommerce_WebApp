@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom"
               <div className="border-2 border-zinc-300 rounded-md pb-2">
                 
                 {/* edit */}
-              <NavLink to={`/product/${catagory}/${props.item.id}`} className="group">
+              <NavLink to={`/product/${catagory}/${props.item._id}`} className="group">
                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                   <img  
                     src={props.item.image}

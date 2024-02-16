@@ -187,7 +187,7 @@ export default function NavigationBar(props) {
   const [searchText, setSearchText] = useState("")
   const [IsClose, setIsClose] = useState(true)
 
-  const { isLogin } = useContext(LoginContext)
+  const { isLogin , user } = useContext(LoginContext)
 
   const navigate = useNavigate()
 
@@ -506,7 +506,7 @@ export default function NavigationBar(props) {
               <div className="ml-4 flex lg:ml-0">
                 <Link to="/">
                   <span className="sr-only">Your Company</span>
-                  <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+                  <img className="h-8 w-auto" src="https://logo.com/image-cdn/images/kts928pd/production/0089b7ae1ed394f041c5f7929e111c11e8eafe4d-424x421.png?w=1080&q=72" height={"50px"} width={"50px"} alt="" />
                 </Link>
               </div>
 
@@ -568,13 +568,14 @@ export default function NavigationBar(props) {
               </div>
 
               <div className="flex items-center">
-
-                {(isLogin) ?
+                
+                {/* Avatar */}
+                {(!isLogin) ?
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    <Link to="/" className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</Link>
+                    <Link to="/login" className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</Link>
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true"></span>
-                    <Link to="/" className="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</Link>
-                  </div> : <div className='text-sm w-[30px] h-[30px] md:w-[40px] md:h-[40px] flex justify-center items-center lg:text-lg text-black space-y-6 bg-slate-400 rounded-full'><NavLink to={"/profile"}>A</NavLink></div>
+                    <Link to="/register" className="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</Link>
+                  </div> : <div className='text-sm w-[30px] h-[30px] md:w-[40px] md:h-[40px] flex justify-center items-center lg:text-lg text-black space-y-6 bg-slate-400 rounded-full'><NavLink to={"/profile"}>{(user)? user.UserName[0] : ""}</NavLink></div>
                 }
 
 

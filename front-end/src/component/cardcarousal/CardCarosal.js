@@ -4,20 +4,9 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import HomeCard from "../HomeCard/HomeCard"
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeftSharp';
 import ArrowRightIcon from '@mui/icons-material/ArrowRightSharp';
-import { useState } from 'react';
-import AllProduct from '../productsArray/AllProduct'
+import { useState, useContext} from 'react';
+import { ProductContext } from "../context/ProductContext"
 
-const Kurtas = AllProduct.filter(e=>{
-    return (e.thirdLavelCategory === "mens_kurta")
-})
-
-const SareeW = AllProduct.filter(e=>{
-    return (e.thirdLavelCategory === "saree")
-})
-
-const Gouns = AllProduct.filter(e=>{
-    return (e.thirdLavelCategory === "gown")
-})
 const responsive = {
     0: { items: 2 },
     740: { items: 3 },
@@ -25,24 +14,38 @@ const responsive = {
     1435: { items: 5.5 },
     2500: { items: 6.5 }
 };
-// edit
-const Mens_Kurtas = Kurtas.map((e, i) => {
-    return <HomeCard key={i + 1} item={e} />
-}).slice(0,12)
-
-// edit
-const Womens_Grouns = Gouns.map((e, i) => {
-    return <HomeCard key={i + 1} item={e} />
-}).slice(0,12)
-
-// edit
-const Saree = SareeW.map((e, i) => {
-    return <HomeCard key={i + 1} item={e} />
-}).slice(0,12)
 
 let items
 
 function CardCarosal(props) {
+    const { ProductList } = useContext(ProductContext)
+    const Kurtas = ProductList.filter(e=>{
+        return (e.thirdLavelCategory === "mens_kurta")
+    })
+    
+    const SareeW = ProductList.filter(e=>{
+        return (e.thirdLavelCategory === "saree")
+    })
+    
+    const Gouns = ProductList.filter(e=>{
+        return (e.thirdLavelCategory === "gown")
+    })
+
+    // edit
+    const Mens_Kurtas = Kurtas.map((e, i) => {
+        return <HomeCard key={i + 1} item={e} />
+    }).slice(0,12)
+
+    // edit
+    const Womens_Grouns = Gouns.map((e, i) => {
+        return <HomeCard key={i + 1} item={e} />
+    }).slice(0,12)
+
+    // edit
+    const Saree = SareeW.map((e, i) => {
+        return <HomeCard key={i + 1} item={e} />
+    }).slice(0,12)
+
     if(props.sectionName === "Mens_Kurtas") {
         items = Mens_Kurtas
     }

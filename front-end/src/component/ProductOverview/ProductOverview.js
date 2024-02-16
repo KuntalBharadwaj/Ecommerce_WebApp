@@ -1,14 +1,13 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
-import { RadioGroup } from '@headlessui/react'
 import { Link, useParams } from 'react-router-dom'
 import { Grid, Rating, LinearProgress } from "@mui/material"
-import AllProduct from '../productsArray/AllProduct'
 import ProductReviewCard from './ProductReview'
 import { Review } from '../productsArray/reviews/review'
 import RecommendationCard from './ReccomendationCard'
 import { additems } from '../redux/CartSlice'
 import { useDispatch } from 'react-redux'
+import { ProductContext } from "../context/ProductContext"
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -45,6 +44,7 @@ const product = {
   details:
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 }
+
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
 function classNames(...classes) {
@@ -52,26 +52,25 @@ function classNames(...classes) {
 }
 
 export default function ProductOverview() {
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  const { filteredProductList } = useContext(ProductContext)
 
   const dispatchEvent = useDispatch()
 
   const { id } = useParams();
+  //console.log(ProductList)
 
-  let item = AllProduct.filter(e => {
-    return (e.id === parseInt(id))
+  let item = filteredProductList.filter(e => {
+    return (e._id === id)
   })
-
 
   const handleAddtocart = (e,item) => {
     e.preventDefault();
     dispatchEvent(additems(item[0]))
   }
 
-  let Recommendation = AllProduct.filter(e => {
+  let Recommendation = filteredProductList.filter(e => {
     return (e.thirdLavelCategory === item[0].thirdLavelCategory)
   })
-
   product.images[0].src = item[0].image
   product.price = item[0].selling_price
   product.details = item[0].description
@@ -120,65 +119,6 @@ export default function ProductOverview() {
                 </div>
 
                 <form className="mt-10">
-
-                  {/* Sizes */}
-                  <div className="mt-10">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                    </div>
-
-                    <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
-                      <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
-                      <div className="grid grid-cols-4 gap-4 sm:grid-cols-4 lg:grid-cols-4">
-                        {product.sizes.map((size) => (
-                          <RadioGroup.Option
-                            key={size.name}
-                            value={size}
-                            disabled={!size.inStock}
-                            className={({ active }) =>
-                              classNames(
-                                size.inStock
-                                  ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                                  : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                                active ? 'ring-2 ring-indigo-500' : '',
-                                'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6'
-                              )
-                            }
-                          >
-                            {({ active, checked }) => (
-                              <>
-                                <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
-                                {size.inStock ? (
-                                  <span
-                                    className={classNames(
-                                      active ? 'border' : 'border-2',
-                                      checked ? 'border-indigo-500' : 'border-transparent',
-                                      'pointer-events-none absolute -inset-px rounded-md'
-                                    )}
-                                    aria-hidden="true"
-                                  />
-                                ) : (
-                                  <span
-                                    aria-hidden="true"
-                                    className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                                  >
-                                    <svg
-                                      className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                      viewBox="0 0 100 100"
-                                      preserveAspectRatio="none"
-                                      stroke="currentColor"
-                                    >
-                                      <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
-                                    </svg>
-                                  </span>
-                                )}
-                              </>
-                            )}
-                          </RadioGroup.Option>
-                        ))}
-                      </div>
-                    </RadioGroup>
-                  </div>
 
                   <button
                     onClick={(e) => handleAddtocart(e,item)}

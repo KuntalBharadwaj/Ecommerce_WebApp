@@ -1,5 +1,5 @@
-import { createContext , useState } from "react";
-import AllProduct from "../productsArray/AllProduct";
+import { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const ProductContext = createContext()
 
@@ -7,12 +7,28 @@ export { ProductContext }
 
 function ProductProvider(props) {
 
-  const [ProductList , setProductList] = useState(AllProduct)
-  const [filteredProductList , setfilteredProductList] = useState([])
+  let AllProduct = [{"name": "Kuntal", "image": "kkk"}]
+  const [ProductList, setProductList] = useState(AllProduct)
+  const [filteredProductList, setfilteredProductList] = useState([])
+
+
+  const fetchProduct = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:4000/api/products");
+      setProductList(response.data); // Update ProductList with response data
+    } catch (error) {
+      console.error("Error fetching products:", error.message);
+    }
+  }
+  
+  useEffect(()=>{
+    fetchProduct()
+  },[])
+
 
   return (
-    <ProductContext.Provider value={{ProductList , setProductList , filteredProductList , setfilteredProductList}}>
-        {props.children}
+    <ProductContext.Provider value={{ ProductList, setProductList, filteredProductList, setfilteredProductList }}>
+      {props.children}
     </ProductContext.Provider>
   )
 }

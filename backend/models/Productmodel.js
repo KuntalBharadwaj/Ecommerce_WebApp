@@ -17,31 +17,11 @@ const ProductSchema = new Schema({
         type: String
     },
 
-    color: {
-        type: String
-    },
-
     disscount: {
         type: String
     },
 
-    color: {
-        type: String
-    },
-
     image:{
-        type: String,
-    },
-
-    size: {
-        type: String
-    },
-
-    topLavelCategory:{
-        type: String,
-    },
-
-    secondLavelCategory:{
         type: String,
     },
 

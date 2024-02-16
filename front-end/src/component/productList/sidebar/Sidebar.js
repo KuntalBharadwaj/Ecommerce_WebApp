@@ -1,9 +1,8 @@
-import { Fragment , Profiler, useContext, useEffect, useState } from 'react'
+import { Fragment , useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { ProductContext } from '../../context/ProductContext'
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -64,10 +63,8 @@ export default function Sidebar() {
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   
-  const { filteredProductList , setfilteredProductList } = useContext(ProductContext)
   const location = useLocation()
   const navigate = useNavigate()
-  const [sideFilterProduct , setSideFilterProduct ] = useState(filteredProductList)
   // console.log(sideFilterProduct)
 
 
