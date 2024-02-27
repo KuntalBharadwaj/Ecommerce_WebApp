@@ -22,11 +22,6 @@ const UserSchema = new Schema({
     Avatar:{
         type: String,
     },
-
-    Address:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:"Address"
-    }]
 })
 
 export const User = mongoose.model("User", UserSchema);

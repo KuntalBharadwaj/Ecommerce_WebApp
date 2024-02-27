@@ -7,6 +7,7 @@ import NavigationBar from "./component/navbar/Navigation";
 import AddressMain from "./component/Address/AddressMain";
 import Login from "./component/Authentication/Login";
 import Register from "./component/Authentication/Register";
+import Profile from "./component/Profile/Profile";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route path="/product/:catagory/:id" element={<ProductOverview />} />
         <Route path="/viewCart" element={<ShoppingCart />} />
         <Route path="/checkout" element={<AddressMain />} />
-        hello
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
     </BrowserRouter>
   );

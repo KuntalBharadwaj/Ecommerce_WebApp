@@ -1,29 +1,45 @@
 import React from 'react'
-import { useState , useContext } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import { LoginContext } from '../context/LoginContext'
+import { useNavigate, useLocation } from 'react-router-dom'
+
 
 function Login() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const { setIsLogin, setUser } = useContext(LoginContext)
+  const navigate = useNavigate()
+
+  // for dynamic redirect
+  const location = useLocation();
+  const from = location.state || '/'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const data = await axios.post("http://127.0.0.1:4000/api/login", {
-      email: email,
-      Password: password
-    })
+    try {
 
-    if(data.data.message === "true") {
-      setIsLogin(true)
-      await setUser(data.data.user)
+      const data = await axios.post("http://127.0.0.1:4000/api/login", {
+        email: email,
+        password: password
+      },{withCredentials: true})
+
+      if (data.data.message === "true") {
+        setIsLogin(true)
+        await setUser(data.data.user)
+        navigate(`${from}`)
+      }
+
+      else {
+        console.log("false")
+        console.log(data)
+      }
+
+    } catch (error) {
+      console.log(error.message)
     }
-    else {
-      console.log("false")
-      console.log(data)
-    }
+
   }
 
   return (

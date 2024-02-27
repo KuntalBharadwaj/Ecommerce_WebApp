@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material'
 import { useSelector , useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { removeitems } from '../redux/CartSlice';
+import { additems, removeitems } from '../redux/CartSlice';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { Navigate } from 'react-router-dom';
+import { Add, Remove } from '@mui/icons-material';
 
 // const products = [
 //   {
@@ -37,12 +37,12 @@ export default function ShoppingCart() {
   
   let actualprice = 0;
   cartProduct.forEach(e => {
-    actualprice = actualprice + e.price
+    actualprice = parseInt(actualprice) + parseInt(e.price)
   });
 
   let discount = 0;
   cartProduct.forEach(e=>{
-    discount = discount + e.price - e.selling_price
+    discount = parseInt(discount) + parseInt(e.price) - parseInt(e.selling_price)
   })
 
   let Totalprice = 0;
@@ -54,6 +54,10 @@ export default function ShoppingCart() {
 
   const handleRemove = (item)=>{
     dispatch(removeitems(item))
+  }
+
+  const handleAdd = (item)=>{
+      dispatch(additems(item))
   }
 
   return (
@@ -88,15 +92,18 @@ export default function ShoppingCart() {
                       <p className='text-green-500 line-through'>₹{e.price}</p>
                     </div>
 
-                    <button className='w-[100px] m-4 bg-green-600 text-white rounded-sm text-center mb-2' onClick={()=>handleRemove(e.id)}>Add More</button>
-                    <button className='w-[100px] m-4 bg-red-600 text-white rounded-sm text-center mb-2' onClick={()=>handleRemove(e.id)}>Remove</button>
+                    <div className='flex mt-5'>
+                    <button className='w-[40px] h-[40px] rounded-[50%] m-4 bg-[#b7acd6] text-black text-center mb-2' onClick={()=>handleAdd(e)}><Add/></button>
+                    <p className='flex items-center font-medium'>{e.count}</p>
+                    <button className='w-[40px] h-[40px] rounded-[50%] m-4 bg-[#1c0a39] text-white text-center mb-2' onClick={()=>handleRemove(e)}><Remove/></button>
+                    </div>
                   </div>
                 </div>
               </div>)
             })}
 
             <div className='flex justify-end m-4'>
-              <button className='h-[40px] w-[200px] bg-orange-600 rounded-sm shadow-lg text-gray-50 text-lg font-semibold' onClick={()=>{navigate('/checkout')}}>Place to Order</button>
+              <button className='h-[40px] w-[200px] bg-[#7411e6b1] rounded-sm shadow-lg text-gray-50 text-lg font-semibold' onClick={()=>{navigate('/checkout')}}>Place to Order</button>
             </div>
           </Grid>
 

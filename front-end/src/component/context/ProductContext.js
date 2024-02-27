@@ -10,6 +10,9 @@ function ProductProvider(props) {
   let AllProduct = [{"name": "Kuntal", "image": "kkk"}]
   const [ProductList, setProductList] = useState(AllProduct)
   const [filteredProductList, setfilteredProductList] = useState([])
+  const [isdropMen, setIsdropMen] = useState(false)
+  const [IsClose, setIsClose] = useState(true)
+  const [isdropWoman, setIsdropWoman] = useState(false)
 
 
   const fetchProduct = async () => {
@@ -27,7 +30,7 @@ function ProductProvider(props) {
 
 
   return (
-    <ProductContext.Provider value={{ ProductList, setProductList, filteredProductList, setfilteredProductList }}>
+    <ProductContext.Provider value={{ ProductList, setProductList, filteredProductList, setfilteredProductList,isdropMen,setIsdropMen,IsClose, setIsClose,isdropWoman, setIsdropWoman}}>
       {props.children}
     </ProductContext.Provider>
   )

@@ -6,11 +6,13 @@ const arrayCarousel = ["/assets/carosalImage/img1.jpg",
      "/assets/carosalImage/img2.jpg", 
     "/assets/carosalImage/img3.jpg", 
     "/assets/carosalImage/img1.jpg", 
-    "/assets/carosalImage/img2.jpg"];
+    "/assets/carosalImage/img4.jpg"];
 
 
 const items = arrayCarousel.map(e => {
-    return <img className="item object-center w-[100vw] h-[75vh]" data-value="1" src={e} alt='not found'/>
+    return <div className='mt-2 rounded-md flex justify-center'>
+     <img className="item rounded-md object-center w-[75vw] h-[82vh]" data-value="1" src={e} alt='not found'/>
+     </div>
 })
 
 const Carousel = () => (

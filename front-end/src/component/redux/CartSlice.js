@@ -7,21 +7,23 @@ const CartSlice = createSlice({
     },
     reducers: {
         additems: (state,action)=>{
-            state.items.push(action.payload)
+            let index = state.items.findIndex(item => item._id === action.payload._id)
+        
+            if(index >=0 ) {
+                state.items[index].count += 1
+            }
+            else {
+                let tempproduct = {...action.payload, count:1}
+                state.items.push(tempproduct)
+            }
         },
 
         removeitems: (state, action)=>{
 
-            for(let i = 0;i<state.items.length;i++) {
-                if(state.items[i].id === action.payload) {
-                    state.items.splice(i,1)
-                    break
-                }
-            }
+            let index = state.items.findIndex(item => item._id === action.payload._id)
+            state.items[index].count -= 1;
 
-            // state.items = state.items.filter(e=>{
-            //     return (e.newid !== action.payload)
-            // })
+            if(state.items[index].count === 0) state.items.splice(index,1)
         }
 
     }

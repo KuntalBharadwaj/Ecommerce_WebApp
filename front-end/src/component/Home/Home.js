@@ -7,10 +7,10 @@ function Home() {
     return (
         <div>
             <Carousel/>
-            <section className=' space-y-20 flex flex-col justify-center'>
-                <CardCarousel sectionName="Mens_Kurtas"/>
-                <CardCarousel sectionName="Womens_Gowns"/>
-                <CardCarousel sectionName="Saree"/>
+            <section className='space-y-20 flex flex-col justify-center'>
+                <CardCarousel  sectionName="Mens_Kurtas"/>
+                <CardCarousel  sectionName="Womens_Gowns"/>
+                <CardCarousel  sectionName="Saree"/>
                 <Footer/>
             </section>
         </div>

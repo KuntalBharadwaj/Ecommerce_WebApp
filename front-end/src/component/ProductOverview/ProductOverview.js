@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Grid, Rating, LinearProgress } from "@mui/material"
 import ProductReviewCard from './ProductReview'
 import { Review } from '../productsArray/reviews/review'
@@ -8,6 +8,7 @@ import RecommendationCard from './ReccomendationCard'
 import { additems } from '../redux/CartSlice'
 import { useDispatch } from 'react-redux'
 import { ProductContext } from "../context/ProductContext"
+import { LoginContext } from "../context/LoginContext"
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -53,6 +54,9 @@ function classNames(...classes) {
 
 export default function ProductOverview() {
   const { filteredProductList } = useContext(ProductContext)
+  const { isLogin } = useContext(LoginContext)
+
+  const navigate = useNavigate()
 
   const dispatchEvent = useDispatch()
 
@@ -65,7 +69,8 @@ export default function ProductOverview() {
 
   const handleAddtocart = (e,item) => {
     e.preventDefault();
-    dispatchEvent(additems(item[0]))
+    if(!isLogin) navigate("/login")
+    else dispatchEvent(additems(item[0]))
   }
 
   let Recommendation = filteredProductList.filter(e => {
@@ -84,7 +89,7 @@ export default function ProductOverview() {
           <div className="mx-auto flex flex-col md:flex-row md:justify-center lg:justify-center mt-6">
             <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 mx-auto md:mx-10 lg:mx-20">
               <img
-                src={product.images[0].src}
+                src={(product.images[0].src)?product.images[0].src : ""}
                 alt={product.images[0].alt}
                 className="object-cover object-top h-[45vh] md:h-[50vh] lg:h-[60vh] xl:h-[70vh] w-[75vw] md:w-[50vw] lg:w-[40vw] xl:w-[30vw]"
               />
