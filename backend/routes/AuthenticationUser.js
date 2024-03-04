@@ -8,93 +8,59 @@ let SECRET_KEY = "kuntal@123"
 const router = express.Router()
 
 router.post("/register", async (req, res) => {
-    
+
     try {
+
         let salt = await bcrypt.genSalt(10)
-        let SecPass = await bcrypt.hash(req.body.Password,salt)
+        let SecPass = await bcrypt.hash(req.body.Password, salt)
 
         const userobj = {
             "UserName": req.body.UserName,
-            "Email" : req.body.email,
+            "Email": req.body.email,
             "Password": SecPass
         }
-        const user = await User.findOne({Email: req.body.email})
+        const user = await User.findOne({ Email: req.body.email })
         if (!user) {
             User.insertMany([userobj])
-            res.json({message:"true"})
+            res.json({success: true , message: "User Successfully LoggedIn" })
         }
-        else res.json({message:"false"})
-    } catch (error) {
-        res.send(error.message)
+        else res.json({ success: false, message: "User Already Registered" })
     }
 
+    catch (error) {
+        res.json({success: false, message: error.message})
+    }
 })
 
 router.post("/login", async (req, res) => {
+
     const userobj = {
         "Email": req.body.email,
         "Password": req.body.password
     }
-
-    const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpsOnly: true
-    }
-
+    
     try {
-        const user = await User.findOne({Email:userobj.Email})
+        const user = await User.findOne({ Email: userobj.Email })
         
-        if(user) {
-            const isvalid = await bcrypt.compare(userobj.Password,user.Password)
-            if(isvalid) {
-                const token = Jwt.sign({email: user.Email, "_id": user._id},SECRET_KEY)
-                res.cookie("token",token,options)
-                res.json({user: user,message: "true"})
-            }
-            else res.json({message: "false"})
-        }
-
-        else {
-            res.json({message: "false"})
-        }
-
-    } catch (error) {
-        res.send(error.message)
-    }
-})
-
-
-router.post("/login", async (req, res) => {
-    const userobj = {
-        "Email": req.body.email,
-        "Password": req.body.Password
-    }
-
-    try {
-        const user = await User.findOne({Email:userobj.Email})
-
-        if(user) {
-            const isvalid = bcrypt.compare(userobj.Password,user.Password,(err,res)=>{
-                if(err) console.log(err)
-                else if(res) console.log(res)
-            })
-
-            if(isvalid) {
+        if (user) {
+            const isvalid = await bcrypt.compare(userobj.Password, user.Password)
+            if (isvalid) {
                 
-                const token = Jwt.sign({email: user.Email, "_id": user._id},SECRET_KEY)
-                res.cookie("token",token,options)
-                res.json({user: user,message: "true"})
+                const token = Jwt.sign({ email: user.Email, "_id": user._id }, SECRET_KEY)
+                res.cookie('token', token, { maxAge: 86400000, httpOnly: true, secure:true, sameSite: "none" });
+                res.json({success: true , message: "User Successfully Registered", user: user})
             }
-            else res.json({message: "false"})
+
+            else res.json({success: false , message: "Invalid Username or Passsword" })
+
         }
 
-        else {
-            res.json({message: "false"})
-        }
+        else res.json({success: false , message: "Invalid Username or Passsword" })
 
     } catch (error) {
-        res.send(error.message)
+        res.json({success: false , message: error.message })
     }
 })
+
 
 export default router

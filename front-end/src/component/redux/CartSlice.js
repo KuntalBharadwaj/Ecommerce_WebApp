@@ -5,6 +5,7 @@ const CartSlice = createSlice({
     initialState: {
         items: []
     },
+
     reducers: {
         additems: (state,action)=>{
             let index = state.items.findIndex(item => item._id === action.payload._id)

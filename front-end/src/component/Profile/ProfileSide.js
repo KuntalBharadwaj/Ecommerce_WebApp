@@ -1,17 +1,30 @@
-import { AccountBox, Logout, Shop } from '@mui/icons-material'
+import { AccountBox, Logout } from '@mui/icons-material'
 import { Avatar } from '@mui/material'
+import { LoginContext } from '../context/LoginContext'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function ProfileSide(props) {
+
+  const { user } = useContext(LoginContext)
+  
+  const navigate = useNavigate()
+
   const handlAccount = ()=>{
-    props.section.setIsActive("Account")
+    props.section.setIsActive("Account") // focusing by div color
   }
 
-  const handlOrder = ()=>{
-    props.section.setIsActive("Order")
-  }
+  const handlLogout = async()=>{
+    props.section.setIsActive("Logout") // focusing by div color
+    try {
+      const response = await axios.get("http://127.0.0.1:4000/api/user/logout",{withCredentials:true})
 
-  const handlLogout = ()=>{
-    props.section.setIsActive("Logout")
+      if(response.data.success) navigate('/login')
+    } catch (error) {
+      console.log(error.message)  
+    }
+
   }
 
   return (
@@ -21,7 +34,7 @@ function ProfileSide(props) {
         <Avatar/>
         <div className='ml-5'>
           <p className=' text-xs'>Hello,</p>
-          <h1 className='text-xl'>Kuntal</h1>
+          <h1 className='text-xl'>{user.UserName}</h1>
         </div>
       </div>
 

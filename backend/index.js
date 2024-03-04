@@ -7,6 +7,7 @@ import UserInfo from "./routes/UserInfo.js"
 import { User } from "./models/Usermodel.js";
 import { Product } from "./models/Productmodel.js"
 import cookieParser from "cookie-parser";
+import authenticateJWT from "./middleware/isLoginmiddleware.js"
 
 const app = express()
 
@@ -21,9 +22,10 @@ app.use(cors(corsOptions));
 
 app.use(cookieParser())
 
+
 app.options('*', cors());
 app.use("/api",Authentication)
-app.use("/api/user",UserInfo)
+app.use("/api/user",authenticateJWT,UserInfo)
 
 
 app.get("/api/products", async (req,res)=>{

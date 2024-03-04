@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const Cartschema = mongoose.Schema({
-    user :{
+const Cartschema = new Schema({
+    user_id :{
         type : mongoose.Schema.Types.model.ObjectId,
         ref:"User"
     },

@@ -7,6 +7,8 @@ function Register() {
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
     const [ userName , setUsername] = useState("")
+    const [isError, setIsError] = useState("");
+
     const navigate = useNavigate()
 
     const handleSubmit = async (e)=>{
@@ -17,10 +19,10 @@ function Register() {
             Password: password
         })
 
-        console.log(data)
-
-        if(data.data.message === 'true') navigate('/login')
-        else navigate('/register')
+        if(data.data.success === true) navigate('/login')
+        else {
+            setIsError(data.data.message)
+        }
     }
 
 
@@ -33,7 +35,11 @@ function Register() {
             <input type='email' name='email' placeholder='Enter your email' required onChange={(e)=>{setEmail(e.target.value)}} className='pl-2 w-[300px] h-[45px] my-3 bg-slate-300'></input>
             <input type='password' name='password' placeholder='Enter your Password' required onChange={(e)=>{setPassword(e.target.value)}} className='pl-2 w-[300px] h-[45px] my-3 bg-slate-300'></input>
             <button type='submit' className='w-[300px] h-[45px] my-2 bg-purple-500' onClick={handleSubmit}>Submit</button>
+            
+            {(isError !== "")?
+            <div className='w-[300px] h-10 bg-white border-2 shadow-md border-red-300 mt-5 text-sm font-semibold text-red-600 flex items-center justify-center'>{isError}</div>:""}
             </div>
+            
         </div>
         </div>
       )
