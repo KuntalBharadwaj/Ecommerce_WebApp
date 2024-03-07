@@ -3,12 +3,14 @@ import { User } from "../models/Usermodel.js"
 import bcrypt from "bcrypt"
 import Jwt from "jsonwebtoken"
 import CartRoute from "../routes/CartInfo.js"
+import AddressInfo from "./AdressInfo.js"
 
 let SECRET_KEY = "kuntal@123"
 
 const router = express.Router()
 
 router.use("/cart",CartRoute)
+router.use("/checkout",AddressInfo)
 
 router.get("/", async(req,res)=>{
     const token = req.cookies.token
@@ -30,7 +32,7 @@ router.get("/", async(req,res)=>{
 router.get("/logout",(req,res)=>{
     
     try {
-        res.clearCookie('token');
+        res.clearCookie('token',{path:"/", secure:true, sameSite: "none" });
         res.status(200).json({success:true})
 
     } catch (error) {

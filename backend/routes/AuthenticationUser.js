@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
             if (isvalid) {
                 
                 const token = Jwt.sign({ email: user.Email, "_id": user._id }, SECRET_KEY)
-                res.cookie('token', token, { maxAge: 86400000, httpOnly: true, secure:true, sameSite: "none" });
+                res.cookie('token', token, { maxAge: 86400000, httpOnly: true, secure:true, sameSite: "none" },{path:"/"});
                 res.json({success: true , message: "User Successfully Registered", user: user})
             }
 

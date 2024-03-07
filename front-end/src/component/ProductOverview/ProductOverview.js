@@ -9,6 +9,7 @@ import { additems } from '../redux/CartSlice'
 import { useDispatch } from 'react-redux'
 import { ProductContext } from "../context/ProductContext"
 import { LoginContext } from "../context/LoginContext"
+import axios from 'axios'
 
 const product = {
   name: 'Basic Tee 6-Pack',
@@ -67,10 +68,27 @@ export default function ProductOverview() {
     return (e._id === id)
   })
 
+
+  const storeInDb = async(item)=>{
+    try {
+      const response = await axios.post("http://127.0.0.1:4000/api/user/cart/addCart",
+      {_id: item._id},
+      
+      {withCredentials:true})
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+
   const handleAddtocart = (e,item) => {
     e.preventDefault();
     if(!isLogin) navigate("/login")
-    else dispatchEvent(additems(item[0]))
+    else {
+      storeInDb(item)
+      dispatchEvent(additems(item[0]))
+    }
   }
 
   let Recommendation = filteredProductList.filter(e => {

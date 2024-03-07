@@ -25,7 +25,8 @@ function Login() {
       const data = await axios.post("http://127.0.0.1:4000/api/login", {
         email: email,
         password: password
-      },{withCredentials: true})
+      },
+      {withCredentials: true})
 
       if (data.data.success) {
         setIsLogin(true)

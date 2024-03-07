@@ -7,6 +7,11 @@ const CartSlice = createSlice({
     },
 
     reducers: {
+
+        intializeState: (state,action)=>{
+            state.items = action.payload
+        },
+
         additems: (state,action)=>{
             let index = state.items.findIndex(item => item._id === action.payload._id)
         
@@ -30,5 +35,5 @@ const CartSlice = createSlice({
     }
 })
 
-export const { additems, removeitems } = CartSlice.actions
+export const { additems, removeitems,intializeState } = CartSlice.actions
 export default CartSlice.reducer

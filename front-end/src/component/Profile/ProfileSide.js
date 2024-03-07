@@ -7,7 +7,7 @@ import axios from 'axios'
 
 function ProfileSide(props) {
 
-  const { user } = useContext(LoginContext)
+  const { user, setUser, setIsLogin } = useContext(LoginContext)
   
   const navigate = useNavigate()
 
@@ -20,7 +20,11 @@ function ProfileSide(props) {
     try {
       const response = await axios.get("http://127.0.0.1:4000/api/user/logout",{withCredentials:true})
 
-      if(response.data.success) navigate('/login')
+      if(response.data.success) {
+        setIsLogin(false)
+        setUser(null)
+        navigate('/login')
+      }
     } catch (error) {
       console.log(error.message)  
     }

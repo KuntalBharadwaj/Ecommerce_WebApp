@@ -19,6 +19,10 @@ const UserSchema = new Schema({
         required: true,
         default: "CUSTOMER"
     },
+    Address:{
+        type: Array,
+        default: []
+    },
     Avatar:{
         type: String,
     },

@@ -1,0 +1,4 @@
+logout
+filtering data
+removing comment and reviews
+cardcarosal not working

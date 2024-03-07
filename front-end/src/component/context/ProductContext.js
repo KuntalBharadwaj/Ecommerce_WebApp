@@ -7,13 +7,11 @@ export { ProductContext }
 
 function ProductProvider(props) {
 
-  let AllProduct = [{"name": "Kuntal", "image": "kkk"}]
-  const [ProductList, setProductList] = useState(AllProduct)
+  const [ProductList, setProductList] = useState([])
   const [filteredProductList, setfilteredProductList] = useState([])
   const [isdropMen, setIsdropMen] = useState(false)
   const [IsClose, setIsClose] = useState(true)
   const [isdropWoman, setIsdropWoman] = useState(false)
-
 
   const fetchProduct = async () => {
     try {
