@@ -62,7 +62,6 @@ export default function ProductOverview() {
   const dispatchEvent = useDispatch()
 
   const { id } = useParams();
-  //console.log(ProductList)
 
   let item = filteredProductList.filter(e => {
     return (e._id === id)
@@ -71,9 +70,8 @@ export default function ProductOverview() {
 
   const storeInDb = async(item)=>{
     try {
-      const response = await axios.post("http://127.0.0.1:4000/api/user/cart/addCart",
+      await axios.post("http://127.0.0.1:4000/api/user/cart/addCart",
       {_id: item._id},
-      
       {withCredentials:true})
 
     } catch (error) {
@@ -86,7 +84,7 @@ export default function ProductOverview() {
     e.preventDefault();
     if(!isLogin) navigate("/login")
     else {
-      storeInDb(item)
+      storeInDb(item[0])
       dispatchEvent(additems(item[0]))
     }
   }

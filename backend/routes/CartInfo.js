@@ -2,10 +2,13 @@ import express from "express";
 import bcrypt from "bcrypt"
 import Jwt from "jsonwebtoken"
 import { Cart } from "../models/CartModel.js";
+import Payment from "./Payment.js"
 
 let SECRET_KEY = "kuntal@123"
 
 const router = express.Router()
+
+router.use("/payment",Payment)
 
 router.get("/", async(req,res)=>{
     const token = req.cookies.token
@@ -61,10 +64,13 @@ router.post("/addCart",async(req,res)=>{
                     user_id : userData._id,
                     products: []
                 }
-
+                
                 cartobj.products.push({product_id: req.body._id,count: 1})
-                Cart.insertMany([cartobj])
-                res.json({success:true})
+                
+                const Acknowledge = await Cart.insertMany([cartobj])
+                
+                if(Acknowledge.acknowledged) res.json({success:true})
+                else res.json({success: false})
             }
         }
     } catch (error) {

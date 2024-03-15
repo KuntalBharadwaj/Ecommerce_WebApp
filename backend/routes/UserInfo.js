@@ -56,7 +56,6 @@ router.patch("/updateDetails", async (req, res) => {
         const userData = await User.findOne({ Email: updateDataObj.CurrEmail })
         if (userData) {
             const isvalid = await bcrypt.compare(updateDataObj.CurrentPass, userData.Password)
-            console.log(isvalid)
 
             if (isvalid) {
                 let salt = await bcrypt.genSalt(10)

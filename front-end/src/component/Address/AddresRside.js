@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
+import { ProductContext } from '../context/ProductContext'
 import axios from 'axios'
 
 function AddresRside(props) {
@@ -8,6 +9,8 @@ function AddresRside(props) {
   const [phoneno, setPhone] = useState("")
   const [city, setCity] = useState("")
   const [pincode, setPincode] = useState()
+  
+  const { handlePayment } = useContext(ProductContext)
 
   const handleDeliver = async()=>{
 
@@ -19,14 +22,17 @@ function AddresRside(props) {
       pincode: pincode
     }
 
-    const response = await axios.post("http://127.0.0.1:4000/api/user/checkout",{addressObj},
+    const response = await axios.post("http://127.0.0.1:4000/api/user/checkout/addAddress",{addressObj},
     {withCredentials:true})
 
     if(response.data.success) {
       let addresdata = props.address
-      addresdata.push(response.data.data)
+      addresdata.push(addressObj)
       props.setaddress(addresdata)
     }
+    
+    handlePayment();
+
   }
 
   return (

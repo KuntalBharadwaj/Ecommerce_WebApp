@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ProductContext } from '../context/ProductContext'
 
 function AddresLside(props) {
+
+  const { handlePayment } = useContext(ProductContext)
+
+  const handleClick = ()=>{
+    handlePayment();
+  }
+
+
   return (
     <div className='p-4'>
       <ul>
@@ -11,16 +20,15 @@ function AddresLside(props) {
             <p className=' text-lg'>We havn't any Saved Address</p>
           </div>: ""
         }
-        {console.log(props.address)}
-        {props.address.map(e => {
-          return (<li>
+        {props.address.map((e,i) => {
+          return (<li key={i} className='my-10'>
             <div>
-              <h1 className=' font-semibold mb-2'>Name</h1>
-              <p>Bangaon, Assam , 781375</p>
-              <h1 className='font-semibold mt-2'>Phone No.</h1>
-              <p>77777777</p>
-              <button className='px-4 py-2 my-2 rounded-sm bg-slate-300'>Deliver Here</button>
+              <h1 className=' font-semibold mb-2'>{`${e.fname} ${e.lname}`}</h1>
+              <p>{`${e.city} ${e.pincode}`}</p>
+              <h1 className='font-semibold mt-2'>Phone No. <span className=' font-normal'>{`${e.phoneno}`}</span> </h1>
+              <button className='px-4 py-2 my-2 rounded-sm bg-slate-300' onClick={handleClick}>Deliver Here</button>
             </div>
+            <hr className='mb-4'></hr>
           </li>)
         })}
       </ul>

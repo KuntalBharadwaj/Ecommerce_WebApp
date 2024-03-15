@@ -1,0 +1,2 @@
+Keyid = rzp_test_2MOyFW5SZzO69L
+secretkey = 8rImkGhbxWVPWn7CBS7hlcTR

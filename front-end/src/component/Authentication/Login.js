@@ -30,6 +30,7 @@ function Login() {
 
       if (data.data.success) {
         setIsLogin(true)
+        
         await setUser(data.data.user)
         navigate(`${from}`)
       }

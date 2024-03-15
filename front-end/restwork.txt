@@ -1,4 +1,6 @@
 logout
-filtering data
+filtering data sidebar
 removing comment and reviews
 cardcarosal not working
+search on enter key press
+dynamic document title

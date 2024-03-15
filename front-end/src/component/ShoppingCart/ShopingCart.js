@@ -5,64 +5,64 @@ import { additems, removeitems } from '../redux/CartSlice';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Add, Remove } from '@mui/icons-material';
 import axios from 'axios';
-
-// const products = [
-//   {
-//     id: 1,
-//     name: 'Throwback Hip Bag',
-//     href: '#',
-//     color: 'Salmon',
-//     price: '$90.00',
-//     quantity: 1,
-//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-//     imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-//   },
-//   {
-//     id: 2,
-//     name: 'Medium Stuff Satchel',
-//     href: '#',
-//     color: 'Blue',
-//     price: '$32.00',
-//     quantity: 1,
-//     imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-//     imageAlt:
-//       'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-//   },
-//   // More products...
-// ]
+import { useContext, useEffect, useState } from 'react';
+import { ProductContext } from '../context/ProductContext';
 
 export default function ShoppingCart() {
 
   const cartProduct = useSelector(store => store.cart.items)
   const navigate = useNavigate();
 
+  const {Totalprice, setTotalprice} = useContext(ProductContext)
 
-  let actualprice = 0;
+  const [actualprice, setActualPrice] = useState();
+  const [discount, setDiscount] = useState();
+  const [Delivery, setDelivery] = useState()
+
+  let tempActual = 0
+  let tempDelivery = 0;
+  let tempdiscount = 0
+  let tempTotal = 0
+  let TotalWithDelivery = 0
+
+  const updatingPrice = ()=>{
   cartProduct.forEach(e => {
-    actualprice = parseInt(actualprice) + parseInt(e.price)
+    tempActual = tempActual + parseInt(e.price) * e.count
   });
+  if (tempActual !== actualprice) setActualPrice(tempActual)
 
-  let discount = 0;
   cartProduct.forEach(e => {
-    discount = parseInt(discount) + parseInt(e.price) - parseInt(e.selling_price)
+    tempDelivery = tempDelivery + 40 * e.count
+  });
+  if (tempDelivery !== Delivery) setDelivery(tempDelivery)
+
+  cartProduct.forEach(e => {
+    tempdiscount = tempdiscount + parseInt(e.price) * e.count - parseInt(e.selling_price) * e.count
   })
+  if (tempdiscount !== discount) setDiscount(tempdiscount)
 
-  let Totalprice = 0;
   cartProduct.forEach(e => {
-    Totalprice = Totalprice + e.selling_price
+    tempTotal = tempTotal + parseInt(e.selling_price) * e.count
   });
+
+  if (tempTotal !== Totalprice) setTotalprice(tempTotal)
+  TotalWithDelivery = Totalprice + Delivery
+}
+
+useEffect(()=>{
+  updatingPrice()
+},[])
+
 
   const dispatch = useDispatch()
-
 
   const removeFromDb = async (item) => {
 
     try {
-      const response = await axios.post("http://127.0.0.1:4000/api/user/cart/removecart",
+      await axios.post("http://127.0.0.1:4000/api/user/cart/removecart",
         { _id: item._id },
         { withCredentials: true })
-      console.log(response)
-
+        updatingPrice()
     } catch (error) {
       console.log(error.message)
     }
@@ -75,15 +75,13 @@ export default function ShoppingCart() {
   }
 
 
-  const storeInDb = async(item)=>{
+  const addindb = async (item) => {
     try {
-      console.log(item)
-      const response = await axios.post("http://127.0.0.1:4000/api/user/cart/addCart",
-      {_id: item._id},
-      
-      {withCredentials:true})
+      await axios.post("http://127.0.0.1:4000/api/user/cart/addCart",
+        { _id: item._id },
 
-      console.log(response)
+        { withCredentials: true })
+        updatingPrice()
     } catch (error) {
       console.log(error.message)
     }
@@ -92,7 +90,7 @@ export default function ShoppingCart() {
 
 
   const handleAdd = (item) => {
-    storeInDb(item)
+    addindb(item)
     dispatch(additems(item))
   }
 
@@ -153,8 +151,6 @@ export default function ShoppingCart() {
                   <p>{`₹${actualprice}`}</p>
                 </div>
 
-
-
                 <div className='flex justify-between mt-4 text-lg'>
                   <p>Discount</p>
                   <p className='text-green-500'>{`- ₹${discount}`}</p>
@@ -171,9 +167,9 @@ export default function ShoppingCart() {
                 <hr className='mt-4 mb-4'></hr>
                 <div className='flex justify-between mt-4 text-lg'>
                   <p>Total Price</p>
-                  {Totalprice >= 500 ?
-                    <p>{`₹${Totalprice}`}</p> :
-                    <p>{`₹${Totalprice += cartProduct.length * 40}`}</p>
+                  {(Totalprice >= 500) ?
+                  <p>{`₹${Totalprice}`}</p>:
+                  <p>{`₹${TotalWithDelivery}`}</p>
                   }
                 </div>
               </div>

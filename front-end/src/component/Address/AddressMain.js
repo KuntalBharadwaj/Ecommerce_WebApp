@@ -1,11 +1,26 @@
 import { Grid } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddresLside from './AddresLside'
 import AddresRside from './AddresRside'
+import axios from 'axios'
 
 function AddressMain() {
 
   const [AddressArray, setAddressArray] = useState([])
+
+  const fetchAdrress = async()=>{
+
+    const response = await axios.get("http://127.0.0.1:4000/api/user/checkout/allAddress",
+    {withCredentials: true})
+    
+    if(response.data.success) setAddressArray(response.data.data)
+  }
+
+
+  useEffect(()=>{
+    fetchAdrress()
+  },[])
+
 
   return (
     <div>

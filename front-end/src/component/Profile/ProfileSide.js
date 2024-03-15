@@ -4,10 +4,13 @@ import { LoginContext } from '../context/LoginContext'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { removeAllitem } from '../redux/CartSlice'
 
 function ProfileSide(props) {
 
   const { user, setUser, setIsLogin } = useContext(LoginContext)
+  const dispatch = useDispatch()
   
   const navigate = useNavigate()
 
@@ -21,6 +24,7 @@ function ProfileSide(props) {
       const response = await axios.get("http://127.0.0.1:4000/api/user/logout",{withCredentials:true})
 
       if(response.data.success) {
+        dispatch(removeAllitem())
         setIsLogin(false)
         setUser(null)
         navigate('/login')

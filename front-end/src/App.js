@@ -17,7 +17,7 @@ import { intializeState } from "./component/redux/CartSlice"
 
 function App() {
 
-  const { isLogin } = useContext(LoginContext)
+  const { isLogin, user } = useContext(LoginContext)
   const { ProductList } = useContext(ProductContext)
 
   const dispatch = useDispatch()
@@ -45,7 +45,7 @@ function App() {
 
   useEffect(() => {
     fetchCart()
-  }, [ProductList])
+  }, [isLogin,user,[]])
 
   return (
 

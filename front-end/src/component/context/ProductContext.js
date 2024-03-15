@@ -12,6 +12,7 @@ function ProductProvider(props) {
   const [isdropMen, setIsdropMen] = useState(false)
   const [IsClose, setIsClose] = useState(true)
   const [isdropWoman, setIsdropWoman] = useState(false)
+  const [Totalprice, setTotalprice] = useState();
 
   const fetchProduct = async () => {
     try {
@@ -21,6 +22,42 @@ function ProductProvider(props) {
       console.error("Error fetching products:", error.message);
     }
   }
+
+
+  const initPayment = (data) => {
+		const options = {
+			key: "YOUR_RAZORPAY_KEY",
+			amount: data.amount,
+			description: "Test Transaction",
+			order_id: data.id,
+			handler: async (response) => {
+				try {
+					const verifyUrl = "http://localhost:8080/api/payment/verify";
+					const { data } = await axios.post(verifyUrl, response);
+					console.log(data);
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			theme: {
+				color: "#3399cc",
+			},
+		};
+		const rzp1 = new window.Razorpay(options);
+		rzp1.open();
+	};
+
+
+  const handlePayment = async () => {
+		try {
+			const orderUrl = "http://localhost:8080/api/payment/orders";
+			const { data } = await axios.post(orderUrl, { amount: Totalprice });
+			console.log(data);
+			initPayment(data.data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
   
   useEffect(()=>{
     fetchProduct()
@@ -28,7 +65,7 @@ function ProductProvider(props) {
 
 
   return (
-    <ProductContext.Provider value={{ ProductList, setProductList, filteredProductList, setfilteredProductList,isdropMen,setIsdropMen,IsClose, setIsClose,isdropWoman, setIsdropWoman}}>
+    <ProductContext.Provider value={{ ProductList, setProductList, filteredProductList, setfilteredProductList,isdropMen,setIsdropMen,IsClose, setIsClose,isdropWoman, setIsdropWoman,Totalprice, setTotalprice, handlePayment}}>
       {props.children}
     </ProductContext.Provider>
   )

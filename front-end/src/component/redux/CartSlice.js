@@ -30,10 +30,13 @@ const CartSlice = createSlice({
             state.items[index].count -= 1;
 
             if(state.items[index].count === 0) state.items.splice(index,1)
-        }
+        },
 
+        removeAllitem: (state, action)=>{
+            state.items = []
+        }
     }
 })
 
-export const { additems, removeitems,intializeState } = CartSlice.actions
+export const { additems, removeitems,intializeState, removeAllitem} = CartSlice.actions
 export default CartSlice.reducer
