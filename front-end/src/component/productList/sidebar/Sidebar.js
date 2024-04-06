@@ -1,8 +1,9 @@
-import { Fragment , useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { CheckBadgeIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { ProductContext } from "../../context/ProductContext"
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -22,20 +23,20 @@ const subCategories = [
 
 const filters = [
   {
-    id: 'color',
-    name: 'Color',
+    id: 'Color',
+    name: 'color',
     options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: false },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
+      { value: 'White', label: 'White', checked: false },
+      { value: 'Orange', label: 'Orange', checked: false },
+      { value: 'Blue', label: 'Blue', checked: false },
+      { value: 'Yellow', label: 'Yellow', checked: false },
+      { value: 'Green', label: 'Green', checked: false },
+      { value: 'Purple', label: 'Purple', checked: false },
     ],
   },
   {
     id: 'Discount',
-    name: 'Discount',
+    name: 'disscount',
     options: [
       { value: '20', label: '20% off', checked: false },
       { value: '30', label: '30% off', checked: false },
@@ -43,15 +44,6 @@ const filters = [
       { value: '50', label: '50% off', checked: false },
       { value: '40', label: '40% off', checked: false },
     ],
-  },
-  {
-    id: 'size',
-    name: 'size',
-    options: [
-      { value: 'S', label: 'S', checked: false },
-      { value: 'M', label: 'M', checked: false },
-      { value: 'L', label: 'L', checked: false },
-    ]
   },
 ]
 
@@ -62,7 +54,15 @@ function classNames(...classes) {
 export default function Sidebar() {
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  
+  const [filterObj, setFilterObj] = useState({
+    "color": [],
+    "disscount": [],
+  });
+
+  const { ProductList , filteredProductList , setfilteredProductList } = useContext(ProductContext)
+  const {catagory} = useParams()
+
+
   const location = useLocation()
   const navigate = useNavigate()
   // console.log(sideFilterProduct)
@@ -72,38 +72,87 @@ export default function Sidebar() {
   //   setfilteredProductList(product)
   // },[handFliterClick])
 
-  const handFliterClick = (value,sectionId)=> {
+  const handleApplyClick = () => {
+    let ProductArray = ProductList.filter(e=>{
+      return (e.thirdLavelCategory === catagory || e.title.includes(catagory))
+    })
+    // console.log(filterObj)
+    let finalProduct = []
+    ProductArray.forEach (e=>{
+        for(let ele in filterObj) {
+          // console.log(filterObj[ele],e.color)
+          if(ele === "color") if(filterObj[ele].includes(e.color)) finalProduct.push(e)
+          if(ele === "Disscount") {
+            filterObj[ele].forEach(elee=>{
+              if(e.disscount >= elee) finalProduct.push(e)
+            })
+          }
+        }
+    })
+    setfilteredProductList(finalProduct)
+  }
+
+  const handFliterClick = (value, sectionId) => {
     const searchParms = new URLSearchParams(location.search)
     let paramData = searchParms.getAll(sectionId)
 
-    if(searchParms.size > 0) { // this is for validating that the query is not empty some filter were applied already
-      if(paramData.length) { // if user want to to apply same filter with diffrent value ex. color white, red etc
+    if (searchParms.size > 0) { // this is for validating that the query is not empty some filter were applied already
+      if (paramData.length) { // if user want to to apply same filter with diffrent value ex. color white, red etc
 
-        if(!paramData[0].split(",").includes(value)) {
+        if (!paramData[0].split(",").includes(value)) {
           paramData.push(value)
-          searchParms.set(sectionId,paramData.join(","))
+          searchParms.set(sectionId, paramData.join(","))
         }
 
         else {
-          let filterData = paramData[0].split(",").filter(e=>{
+          let filterData = paramData[0].split(",").filter(e => {
             return (e !== value)
           })
-          searchParms.set(sectionId,filterData.join(","))
+          searchParms.set(sectionId, filterData.join(","))
         }
       }
       else {
-        searchParms.set(sectionId,value)
+        searchParms.set(sectionId, value)
       }
     }
 
     else {
-      searchParms.set(sectionId,value)
+      searchParms.set(sectionId, value)
     }
 
     let check = searchParms.getAll(sectionId)
-    if(check[0] === '') searchParms.delete(sectionId)
+    if (check[0] === '') searchParms.delete(sectionId)
     let query = searchParms.toString()
-    navigate({search:`?${query}`})
+    navigate({ search: `?${query}` })
+
+    if (filterObj[sectionId].includes(value)) {
+      let tempArray = filterObj[sectionId].filter(e => {
+        return (value !== e)
+      })
+
+      let obj = filterObj
+      obj[sectionId] = tempArray
+      setFilterObj(obj)
+    }
+    else {
+      let obj = filterObj
+      obj[sectionId].push(value);
+      setFilterObj(obj)
+    }
+
+    // if(filterObj[sectionId]) {
+    //   let obj = filterObj[sectionId].push(value)
+    // setFilterObj(obj)
+    //   // filterObj[sectionId].push(value)
+    // }
+
+    // else {
+    //   let obj = filterObj[sectionId].push(value)
+    //   setFilterObj(obj)
+    // }
+    // console.log(filterObj)
+    let temp = query.split('=');
+    // console.log(temp)
     let product = check[0].split(',');
     // console.log(product)
     // setfilteredProductList(sideFilterProduct.filter(e=>{
@@ -112,7 +161,7 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="bg-white rounded-md min-w-[22vw] h-[70px] sm:h-[100px] lg:h-full md:h-[100px]">
+    <div className="bg-white rounded-md min-w-[22vw] h-[70px] sm:h-[100px] lg:h-full md:h-[100px] shadow-lg shadow-slate-300">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -152,26 +201,15 @@ export default function Sidebar() {
                     </button>
                   </div>
 
-                  {/* Filters */}
+                  {/* Filters for mobile */}
                   <form className="mt-4 border-t border-gray-200">
-                    <h3 className="sr-only">Categories</h3>
-                    <ul lassName="px-2 py-3 font-medium text-gray-900">
-                      {subCategories.map((category) => (
-                        <li key={category.name}>
-                          <Link to={category.href} className="block px-2 py-3">
-                            {category.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-
                     {filters.map((section) => (
                       <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
                         {({ open }) => (
                           <>
                             <h3 className="-mx-2 -my-3 flow-root">
                               <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                <span className="font-medium text-gray-900">{section.name}</span>
+                                <span className="font-medium text-gray-900">{section.id}</span>
                                 <span className="ml-6 flex items-center">
                                   {open ? (
                                     <MinusIcon className="h-5 w-5" aria-hidden="true" />
@@ -187,6 +225,7 @@ export default function Sidebar() {
                                   <div key={option.value} className="flex items-center">
                                     <input
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
+                                      onChange={() => { handFliterClick(option.value, section.name) }}
                                       name={`${section.id}[]`}
                                       defaultValue={option.value}
                                       type="checkbox"
@@ -208,6 +247,9 @@ export default function Sidebar() {
                       </Disclosure>
                     ))}
                   </form>
+                    <div className='mt-5 ml-3'>
+                      <button className='bg-[#9c4df7] w-[130px] h-[40px] text-sm font-bold text-white' onClick={handleApplyClick}>Apply Changes</button>
+                    </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -262,10 +304,7 @@ export default function Sidebar() {
                 </Transition>
               </Menu>
 
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
+
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -274,33 +313,22 @@ export default function Sidebar() {
                 <span className="sr-only">Filters</span>
                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
               </button>
+
+
             </div>
           </div>
 
-          <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <h2 id="products-heading" className="sr-only">
-              Products
-            </h2>
-
-            <div className="">
+          <section aria-labelledby="products-heading" className="pb-20 pt-6">
+            <div>
               {/* Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
-                <ul className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <Link to={category.href}>{category.name}</Link>
-                    </li>
-                  ))}
-                </ul>
-
                 {filters.map((section) => (
                   <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
                     {({ open }) => (
                       <>
                         <h3 className="-my-3 flow-root">
                           <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
+                            <span className="font-medium text-gray-900">{section.id}</span>
                             <span className="ml-6 flex items-center">
                               {open ? (
                                 <MinusIcon className="h-5 w-5" aria-hidden="true" />
@@ -315,7 +343,7 @@ export default function Sidebar() {
                             {section.options.map((option, optionIdx) => (
                               <div key={option.value} className="flex items-center">
                                 <input
-                                  onChange={() =>{ handFliterClick(option.value, section.name) }}
+                                  onChange={() => { handFliterClick(option.value, section.name) }}
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
@@ -338,6 +366,9 @@ export default function Sidebar() {
                   </Disclosure>
                 ))}
               </form>
+              <div className='mt-5 hidden lg:block'>
+                <button className='bg-[#9c4df7] w-[130px] h-[40px] text-sm font-bold text-white' onClick={handleApplyClick}>Apply Changes</button>
+              </div>
             </div>
           </section>
         </main>

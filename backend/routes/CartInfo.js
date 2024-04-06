@@ -2,13 +2,11 @@ import express from "express";
 import bcrypt from "bcrypt"
 import Jwt from "jsonwebtoken"
 import { Cart } from "../models/CartModel.js";
-import Payment from "./Payment.js"
+import dotenv from "dotenv"
 
-let SECRET_KEY = "kuntal@123"
+let SECRET_KEY = process.env.SECRET_KEY
 
 const router = express.Router()
-
-router.use("/payment",Payment)
 
 router.get("/", async(req,res)=>{
     const token = req.cookies.token

@@ -1,6 +1,10 @@
 import express from "express"
 import Razorpay from "razorpay";
 import crypto from "crypto";
+import dotenv from "dotenv"
+import { Order } from "../models/ordersModel.js";
+
+dotenv.config()
 
 const router = express.Router()
 
@@ -10,7 +14,6 @@ router.post("/orders", async (req, res) => {
 			key_id: process.env.KEY_ID,
 			key_secret: process.env.KEY_SECRET,
 		});
-
 		const options = {
 			amount: req.body.amount * 100,
 			currency: "INR",
@@ -20,13 +23,14 @@ router.post("/orders", async (req, res) => {
 		instance.orders.create(options, (error, order) => {
 			if (error) {
 				console.log(error);
-				return res.json({ success: false, message: "Something Went Wrong!" });
+				return res.status(500).json({ message: "Something Went Wrong!" });
 			}
-			res.status(200).json({success: true, data: order });
+			res.status(200).json({ data: order });
 		});
+
 	} catch (error) {
 		res.json({success: false, message: "Internal Server Error!" });
-		console.log(error);
+		console.log("error in orders" + error.message);
 	}
 });
 
@@ -47,7 +51,7 @@ router.post("/verify", async (req, res) => {
 		}
 	} catch (error) {
 		res.json({success: false, message: "Internal Server Error!" });
-		console.log(error);
+		console.log("message in verify" + error.message);
 	}
 });
 

@@ -1,6 +1,6 @@
 import Jwt from "jsonwebtoken";
 
-let SECRET_KEY = "kuntal@123"
+let SECRET_KEY = process.env.SECRET_KEY
 
 function authenticateJWT(req, res, next) {
     try {
@@ -15,7 +15,6 @@ function authenticateJWT(req, res, next) {
                 console.log(err)
                 return res.status(403).json({ success: false });
             }
-            
             next();
         });
 

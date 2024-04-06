@@ -19,11 +19,11 @@ import { ProductContext } from "../../context/ProductContext"
     },[product, setfilteredProductList])
 
     return (
-      <div className=" bg-white m-1 ml-3 rounded-md">
+      <div className=" bg-white m-1 ml-3 rounded-md shadow-lg shadow-slate-400">
         <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {filteredProductList.map((e,i) => (
-              <div key={i} className="border-2 border-zinc-300 rounded-md pb-2">
+              <div key={i} className="rounded-sm pb-2 shadow-lg shadow-slate-300">
                 
                 {/* edit */}
               <NavLink to={`/product/${catagory}/${e._id}`} className="group">
@@ -31,7 +31,7 @@ import { ProductContext } from "../../context/ProductContext"
                   <img  
                     src={(e.image)? e.image : ""}
                     alt="not found"
-                    className="h-[40vh] w-full object-cover object-top group-hover:opacity-75"
+                    className="h-[200px] sm:h-[340px] w-full object-cover object-top group-hover:opacity-75"
                   />
                 </div>
                 <h3 className="mt-4 ml-3 text-md font-semibold text-gray-900">{e.brand}</h3>

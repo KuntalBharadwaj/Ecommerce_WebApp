@@ -2,8 +2,11 @@ import express from "express";
 import { User } from "../models/Usermodel.js"
 import bcrypt from "bcrypt"
 import Jwt from "jsonwebtoken";
+import dotenv from "dotenv"
 
-let SECRET_KEY = "kuntal@123"
+dotenv.config()
+
+let SECRET_KEY = process.env.SECRET_KEY
 
 const router = express.Router()
 
@@ -58,6 +61,7 @@ router.post("/login", async (req, res) => {
         else res.json({success: false , message: "Invalid Username or Passsword" })
 
     } catch (error) {
+        console.log("Error in login" + error.message )
         res.json({success: false , message: error.message })
     }
 })

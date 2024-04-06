@@ -95,7 +95,7 @@ useEffect(()=>{
   }
 
   return (
-    <div className='m-2 bg-white'>
+    <div className='m-5 mt-8 bg-white shadow-lg shadow-slate-300'>
 
       {cartProduct.length === 0 ?
         <section>
@@ -110,11 +110,12 @@ useEffect(()=>{
         :
         <section className='mt-4'>
 
-          <Grid container className='flex justify-center sm:space-x-8 space-y-5 sm:space-y-0'>
-            <Grid item xs={12} sm={6} className='bg-white'>
+          <Grid container className='flex justify-evenly'>
+            <Grid item xs={12} sm={8} className='bg-white shadow-lg shadow-slate-300'>
               {cartProduct.map((e, i) => {
 
-                return (<div key={i} className='border-b-2 mb-4'>
+                return (
+                <div key={i} className='border-b-2 mb-4'>
                   <div className='flex items-center'>
                     <div>
                       <NavLink to={`/product/${e.thirdLavelCategory}/${e.id}`}><img src={e.image} alt='not found' className='m-2 w-[200px] h-[200px]'></img></NavLink>
@@ -135,13 +136,9 @@ useEffect(()=>{
                   </div>
                 </div>)
               })}
-
-              <div className='flex justify-end m-4'>
-                <button className='h-[40px] w-[200px] bg-[#7411e6b1] rounded-sm shadow-lg text-gray-50 text-lg font-semibold' onClick={() => { navigate('/checkout') }}>Place to Order</button>
-              </div>
             </Grid>
 
-            <Grid item xs={12} sm={3} className=' bg-white'>
+            <Grid item xs={12} sm={3} className=' bg-white shadow-lg shadow-slate-300'>
               <div className='p-5'>
                 <h1 className=' text-xl font-bold text-gray-500'>Price Details</h1>
                 <hr className='mt-2 mb-2'></hr>
@@ -174,9 +171,10 @@ useEffect(()=>{
                 </div>
               </div>
             </Grid>
-
           </Grid>
-
+          <div className='p-4 flex justify-center'>
+                <button className='h-[50px] w-[200px] bg-[#7411e6b1] rounded-sm shadow-lg shadow-[#a691f78f] text-gray-50 text-lg font-semibold' onClick={() => { navigate('/checkout') }}>Place to Order</button>
+          </div>
         </section>
       }
     </div>

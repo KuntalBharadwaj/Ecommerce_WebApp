@@ -4,7 +4,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import HomeCard from "../HomeCard/HomeCard"
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeftSharp';
 import ArrowRightIcon from '@mui/icons-material/ArrowRightSharp';
-import { useState, useContext} from 'react';
+import { useState, useContext,useEffect} from 'react';
 import { ProductContext } from "../context/ProductContext"
 
 const responsive = {
@@ -19,6 +19,7 @@ let items
 
 function CardCarosal(props) {
     const { ProductList } = useContext(ProductContext)
+
     const Kurtas = ProductList.filter(e=>{
         return (e.thirdLavelCategory === "mens_kurta")
     })
@@ -42,9 +43,9 @@ function CardCarosal(props) {
     }).slice(0,12)
 
     // edit
-    const Saree = SareeW.map((e, i) => {
+    const Saree = SareeW.slice(0,12).map((e, i) => {
         return <HomeCard key={i + 1} item={e} />
-    }).slice(0,12)
+    })
 
     if(props.sectionName === "Mens_Kurtas") {
         items = Mens_Kurtas
@@ -61,19 +62,20 @@ function CardCarosal(props) {
     const [ActiveIndex, setActiveIndex] = useState(0)
 
     const slidePrev = () => {
-        setActiveIndex(ActiveIndex - 2);
+        setActiveIndex(ActiveIndex - 4);
     }
-
+    
     const slideNext = () => {
-        setActiveIndex(ActiveIndex + 2);
+        setActiveIndex(ActiveIndex + 4);
+        console.log(items)
     }
 
-    const syncActiveIndex = (i) => {
+    const syncActiveIndex = () => {
         setActiveIndex(ActiveIndex)
     }
 
     return (
-        <div className='relative h-[320px] lg:h-[350px] bg-slate-300 mx-2 rounded-sm'>
+        <div className='relative h-[320px] lg:h-[350px] bg-white mx-2 shadow-lg rounded-sm'>
             <h1 className='my-8 ml-8 text-4xl font-bold'>{props.sectionName}</h1>
             <AliceCarousel
                 mouseTracking

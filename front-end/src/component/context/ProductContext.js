@@ -17,7 +17,7 @@ function ProductProvider(props) {
   const fetchProduct = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:4000/api/products");
-      setProductList(response.data); // Update ProductList with response data
+	  if(response.data.success === true) setProductList(response.data.data); // Update ProductList with response data
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
@@ -26,14 +26,14 @@ function ProductProvider(props) {
 
   const initPayment = (data) => {
 		const options = {
-			key: "YOUR_RAZORPAY_KEY",
+			key: process.env.KEY_SECRET,
 			amount: data.amount,
 			description: "Test Transaction",
 			order_id: data.id,
 			handler: async (response) => {
 				try {
-					const verifyUrl = "http://localhost:8080/api/payment/verify";
-					const { data } = await axios.post(verifyUrl, response);
+					const verifyUrl = "http://localhost:4000/api/user/Payment/verify";
+					const { data } = await axios.post(verifyUrl, response,{withCredentials:true});
 					console.log(data);
 				} catch (error) {
 					console.log(error);
@@ -50,10 +50,11 @@ function ProductProvider(props) {
 
   const handlePayment = async () => {
 		try {
-			const orderUrl = "http://localhost:8080/api/payment/orders";
-			const { data } = await axios.post(orderUrl, { amount: Totalprice });
-			console.log(data);
-			initPayment(data.data);
+			console.log("start")
+			const orderUrl = "http://127.0.0.1:4000/api/user/payment/orders";
+			const response = await axios.post(orderUrl, { amount: Totalprice },{withCredentials:true});
+			console.log(response);
+			initPayment(response.data);
 		} catch (error) {
 			console.log(error);
 		}
