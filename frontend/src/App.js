@@ -14,6 +14,7 @@ import { useContext, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { intializeState } from "./component/redux/CartSlice"
+import Admin from "./Admin/Admin";
 
 function App() {
 
@@ -52,7 +53,7 @@ function App() {
     <BrowserRouter>
       <NavigationBar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Admin/>} />
         <Route
           path="/login"
           element={isLogin ? <Navigate to="/" /> : <Login />} />

@@ -151,9 +151,7 @@ export default function Sidebar() {
     //   setFilterObj(obj)
     // }
     // console.log(filterObj)
-    let temp = query.split('=');
     // console.log(temp)
-    let product = check[0].split(',');
     // console.log(product)
     // setfilteredProductList(sideFilterProduct.filter(e=>{
     //   return (e.sectionId === product[0])
