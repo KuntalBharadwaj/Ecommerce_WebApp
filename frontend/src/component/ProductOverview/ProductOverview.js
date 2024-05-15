@@ -51,7 +51,7 @@ function classNames(...classes) {
 
 export default function ProductOverview() {
   const { filteredProductList } = useContext(ProductContext)
-  const { isLogin } = useContext(LoginContext)
+  const { isUserLogin } = useContext(LoginContext)
   const [item, setItem] = useState({})
 
   const navigate = useNavigate()
@@ -88,7 +88,7 @@ export default function ProductOverview() {
 
   const handleAddtocart = (e, item) => {
     e.preventDefault();
-    if (!isLogin) navigate("/login")
+    if (!isUserLogin) navigate("/login")
     else {
       storeInDb(item)
       dispatchEvent(additems(item))

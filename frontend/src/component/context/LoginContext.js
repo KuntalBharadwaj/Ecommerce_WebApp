@@ -8,7 +8,10 @@ export { LoginContext }
 
 function LoginProvider(props) {
 
-  const [ isLogin , setIsLogin ] = useState(false)
+  const [ isUserLogin , setIsUserLogin ] = useState(false)
+  const [ isAdminLogin , setIsAdminLogin ] = useState(false)
+  const [ isSellerLogin , setIsSellerLogin ] = useState(false)
+
   const [ user , setUser ] = useState(null)
 
   const checkIslogin = async ()=>{
@@ -19,8 +22,11 @@ function LoginProvider(props) {
     {withCredentials:true})
     
     if(response.data.success) {
-      setIsLogin(true)
       setUser(response.data.user)
+
+      if(response.data.user.Type === 'User') setIsUserLogin(true)
+      if(response.data.user.Type === 'Seller') setIsSellerLogin(true)
+      if(response.data.user.Type === 'Admin') setIsAdminLogin(true)
     }
       
     } catch (error) {
@@ -34,7 +40,7 @@ function LoginProvider(props) {
   },[])
 
   return (
-    <LoginContext.Provider value={{isLogin, setIsLogin, user, setUser}}>
+    <LoginContext.Provider value={{isUserLogin,setIsUserLogin, isAdminLogin, setIsAdminLogin, isSellerLogin,setIsSellerLogin, user, setUser}}>
       {props.children}
     </LoginContext.Provider>
   )

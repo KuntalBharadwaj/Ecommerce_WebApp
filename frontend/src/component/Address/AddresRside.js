@@ -32,7 +32,6 @@ function AddresRside(props) {
     }
     
     handlePayment();
-
   }
 
   return (

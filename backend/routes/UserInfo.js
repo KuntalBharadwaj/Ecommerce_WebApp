@@ -82,7 +82,7 @@ router.patch("/updateDetails", async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error.message)
+        console.log("error in updateDetails catch" + error.message)
         res.status(400).json({ success: false, message: error.message })
     }
 })

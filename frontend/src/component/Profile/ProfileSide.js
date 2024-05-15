@@ -9,7 +9,7 @@ import { removeAllitem } from '../redux/CartSlice'
 
 function ProfileSide(props) {
 
-  const { user, setUser, setIsLogin } = useContext(LoginContext)
+  const { user, setUser, setIsUserLogin } = useContext(LoginContext)
   const dispatch = useDispatch()
   
   const navigate = useNavigate()
@@ -25,7 +25,7 @@ function ProfileSide(props) {
 
       if(response.data.success) {
         dispatch(removeAllitem())
-        setIsLogin(false)
+        setIsUserLogin(false)
         setUser(null)
         navigate('/login')
       }

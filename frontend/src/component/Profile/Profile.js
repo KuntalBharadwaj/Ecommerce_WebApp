@@ -16,10 +16,11 @@ function Profile() {
 
     const [email, setEmail] = useState(user.Email)
     const [username, setUsername] = useState(user.UserName)
-    const [currpassword, setCurrPassword] = useState()
-    const [newpassword, setNewPassword] = useState()
+    const [currpassword, setCurrPassword] = useState("")
+    const [newpassword, setNewPassword] = useState("")
 
-    const handleUpdate = async () => {
+    const handleUpdate = async (e) => {
+        e.preventDefault()
         try {
             const Acknowledge = await axios.patch("http://127.0.0.1:4000/api/user/updateDetails",
                 {
@@ -61,22 +62,22 @@ function Profile() {
                 </Grid>
                 <Grid item md={6} xs={12} marginTop={2}>
                     <div className=' rounded-sm shadow-md pl-10 bg-white min-h-[85vh] min'>
-                        <div className='flex flex-col'>
+                        <form className='flex flex-col'>
                             <label className='mt-5' >Name:</label>
-                            <input type='text' name='username' onChange={(e) => { setUsername(e.target.value) }} className='mt-3 w-80 h-[50px] rounded-sm bg-slate-200' value={username}></input>
+                            <input type='text' name='username' required onChange={(e) => { setUsername(e.target.value) }} className='mt-3 w-80 h-[50px] rounded-sm bg-slate-200 p-4' value={username}></input>
                             <label className='mt-5'>Email:</label>
-                            <input type='email' name='email' onChange={(e) => { setEmail(e.target.value) }} className='mt-3 w-80 h-[50px] bg-slate-200 rounded-sm' value={email}></input>
+                            <input type='email' name='email' required onChange={(e) => { setEmail(e.target.value) }} className='mt-3 w-80 h-[50px] bg-slate-200 rounded-sm p-4' value={email}></input>
                             <label className='mt-5'>Current Password:</label>
-                            <input type='password' name='currpass' onChange={(e) => { setCurrPassword(e.target.value) }} className='mt-3 w-80 h-[50px] bg-slate-200 rounded-sm'></input>
+                            <input type='password' name='currpass' required onChange={(e) => { setCurrPassword(e.target.value) }} className='mt-3 w-80 h-[50px] bg-slate-200 rounded-sm p-4'></input>
                             <label className='mt-5'>New Password</label>
-                            <input type='password' name='newpass' onChange={(e) => { setNewPassword(e.target.value) }} className='mt-3 w-80 h-[50px] bg-slate-200 rounded-sm'></input>
-                            <button className='mt-3 w-[120px] h-[30px] bg-[#a893f6] rounded-sm' onClick={handleUpdate}>Update</button>
+                            <input type='password' name='newpass' required onChange={(e) => { setNewPassword(e.target.value) }} className='mt-3 w-80 h-[50px] bg-slate-200 rounded-sm p-4'></input>
+                            <button type='submit' className='mt-3 w-[120px] h-[30px] bg-[#a893f6] rounded-sm' onClick={handleUpdate}>Update</button>
                             {(isError !== "") ?
-                                <div className='w-[300px] h-10 bg-white border-2 shadow-md border-red-300 mt-5 text-sm font-semibold text-red-600 flex items-center justify-center'>{isError}</div> : ""}
+                                <div className='w-[300px] h-10 bg-white border-2 shadow-sm border-red-300 mt-5 text-sm font-semibold text-red-600 flex items-center justify-center'>{isError}</div> : ""}
                             {(isSuccess !== "") ?
-                                <div className='w-[300px] h-10 bg-white border-2 shadow-md border-green-300 mt-5 text-sm font-semibold text-green-600 flex items-center justify-center'>{isSuccess}</div> : ""}
+                                <div className='w-[300px] h-10 bg-white border-2 shadow-sm border-green-300 mt-5 text-sm font-semibold text-green-600 flex items-center justify-center'>{isSuccess}</div> : ""}
                         
-                        </div>
+                        </form>
                     </div>
                 </Grid>
             </Grid>

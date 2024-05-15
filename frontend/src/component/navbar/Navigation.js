@@ -165,7 +165,7 @@ export function Men() {
 export default function NavigationBar(props) {
   const [searchText, setSearchText] = useState("")
 
-  const { isLogin , user } = useContext(LoginContext)
+  const { isUserLogin , user } = useContext(LoginContext)
   const { IsClose , setIsClose, isdropMen, setIsdropMen,isdropWoman, setIsdropWoman } = useContext(ProductContext)
 
   const navigate = useNavigate()
@@ -347,7 +347,7 @@ export default function NavigationBar(props) {
                 </div>
               </div>
 
-              {(isLogin) ?
+              {(isUserLogin) ?
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
                     <Link to="/" className="-m-2 block p-2 font-medium text-gray-900">Sign in</Link>
@@ -444,7 +444,7 @@ export default function NavigationBar(props) {
               <div className="flex items-center">
                 
                 {/* Avatar */}
-                {(!isLogin) ?
+                {(!isUserLogin) ?
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     <Link to="/login" state={window.location.pathname} className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</Link>
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true"></span>

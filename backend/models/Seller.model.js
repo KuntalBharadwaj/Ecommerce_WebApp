@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const UserSchema = new Schema({
+const SellerSchema = new mongoose.Schema({
     UserName: {
         type: String,
         required: true
@@ -14,18 +14,9 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    Address:{
-        type: Array,
-        default: []
-    },
-
-    Type: {
-        type: String
-    },
-
     Avatar:{
         type: String,
-    },
+    }
 })
 
-export const User = mongoose.model("User", UserSchema);
+export const Seller = mongoose.model("Seller",SellerSchema)

@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import axios from 'axios'
+import { LoginContext } from '../../component/context/LoginContext'
 
 function Insert() {
 
@@ -14,8 +15,14 @@ function Insert() {
     const [ThirdCata, setThirdCata] = useState("")
     const [Descri,setDesci] = useState("")
 
+    const {user} = useContext(LoginContext)
+
+    const [ispopup, setIspopup] = useState("")
+
     const handleAddItem = async()=>{
         const obj = {
+          "Sname": user.UserName,
+          "S_id": user._id,
           "image": imgString,
           "brand": BrandName,
           "title": Title,
@@ -28,21 +35,30 @@ function Insert() {
           "description": Descri
         }
 
-        const response = await axios.post("http://127.0.0.1:4000/api/admin/AddItem",
+        const response = await axios.post("http://127.0.0.1:4000/api/seller/AddItem",
         obj,
         {withCredentials:true}
       )
 
-      console.log(response)
-
       if(response.data.success === true) {
-        console.log("yes")
+        setIspopup("Item Successfully Added")
+        setTimeout(() => {
+          setIspopup("")
+        }, 2000);
+      }
+
+      else{
+        setIspopup("Some Internal Error Occur")
+        setTimeout(() => {
+          setIspopup("")
+        }, 2000);
       }
 
       }
 
   return (
     <div>
+      {(ispopup!=="")?<div className='w-full flex justify-center items-center bg-[#c88dfb] h-[35px] font-serif font-semibold'>{ispopup}</div>:""}
           <div className="flex flex-col">
             <div className="flex m-4 items-center justify-between">
               <div className="flex flex-col">

@@ -118,10 +118,10 @@ useEffect(()=>{
                 <div key={i} className='border-b-2 mb-4'>
                   <div className='flex items-center'>
                     <div>
-                      <NavLink to={`/product/${e.thirdLavelCategory}/${e.id}`}><img src={e.image} alt='not found' className='m-2 w-[200px] h-[200px]'></img></NavLink>
+                      <NavLink to={`/product/${e.thirdLavelCategory}/${e._id}`}><img src={e.image} alt='not found' className='m-2 w-[200px] h-[200px]'></img></NavLink>
                     </div>
                     <div>
-                      <NavLink to={`/product/${e.thirdLavelCategory}/${e.id}`}><h1 className='mx-4'>{e.title}</h1></NavLink>
+                      <NavLink to={`/product/${e.thirdLavelCategory}/${e._id}`}><h1 className='mx-4'>{e.title}</h1></NavLink>
                       <div className='flex'>
                         <p className='mx-4'>₹{e.selling_price}</p>
                         <p className='text-green-500 line-through'>₹{e.price}</p>

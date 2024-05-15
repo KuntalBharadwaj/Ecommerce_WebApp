@@ -1,16 +1,15 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const schema = new Schema({
-    name: {
-        type: String
-    },
-    amount: {
-        type: Number
+    user_id :{
+        type : mongoose.Schema.Types.ObjectId,
+        ref:"User"
     },
 
-    order_id:{
+    username: {
         type: String
     },
+    
     razorpay_payment_id:{
         type:String,
         default:null
@@ -22,6 +21,14 @@ const schema = new Schema({
     razorpay_signature:{
         type:String,
         default:null
+    },
+    product:{
+        type: Array,
+        default: []
+    },
+    order: {
+        type: String,
+        default: "pending"
     }
 })
 

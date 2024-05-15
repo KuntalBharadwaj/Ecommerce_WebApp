@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
 import authenticateJWT from "./middleware/isLoginmiddleware.js"
 import dotenv from "dotenv"
 import admin from "./routes/Admin.js"
+import seller from "./routes/Seller.js"
 
 const app = express()
 dotenv.config()
@@ -31,7 +32,8 @@ app.options('*', cors());
 app.use("/api",Authentication)
 app.use("/api/user",authenticateJWT,UserInfo)
 app.use("/api/products",product)
-app.use("/api/admin",admin)
+app.use("/api/admin",Authentication,admin)
+app.use("/api/seller",Authentication,seller)
 
 
 // app.get("/api/products", async (req,res)=>{

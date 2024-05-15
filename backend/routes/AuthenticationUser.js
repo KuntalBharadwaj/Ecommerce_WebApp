@@ -3,6 +3,7 @@ import { User } from "../models/Usermodel.js"
 import bcrypt from "bcrypt"
 import Jwt from "jsonwebtoken";
 import dotenv from "dotenv"
+import { Seller } from "../models/Seller.model.js";
 
 dotenv.config()
 
@@ -20,11 +21,16 @@ router.post("/register", async (req, res) => {
         const userobj = {
             "UserName": req.body.UserName,
             "Email": req.body.email,
-            "Password": SecPass
+            "Password": SecPass,
+            "Type": req.body.Type
         }
-        const user = await User.findOne({ Email: req.body.email })
-        if (!user) {
-            User.insertMany([userobj])
+        
+        const user = await User.findOne({ Email: req.body.email }) 
+        const user2 = await Seller.findOne({Email:req.body.email})
+
+        if (!user && !user2) {
+            if(userobj.Type == "Seller") Seller.insertMany([userobj])
+            else User.insertMany([userobj])
             res.json({success: true , message: "User Successfully LoggedIn" })
         }
         else res.json({ success: false, message: "User Already Registered" })
@@ -39,11 +45,12 @@ router.post("/login", async (req, res) => {
 
     const userobj = {
         "Email": req.body.email,
-        "Password": req.body.password
+        "Password": req.body.password,
+        "Type": req.body.Type
     }
     
     try {
-        const user = await User.findOne({ Email: userobj.Email })
+        const user = await User.findOne({ Email: userobj.Email,Type: userobj.Type }) || await Seller.findOne({ Email: userobj.Email,Type: userobj.Type })
         
         if (user) {
             const isvalid = await bcrypt.compare(userobj.Password, user.Password)
