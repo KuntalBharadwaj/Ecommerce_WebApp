@@ -18,7 +18,7 @@ function Register() {
             UserName: userName,
             email : email,
             Password: password,
-            Type: Type
+            role: Type
         })
 
         if(data.data.success === true) navigate('/login')

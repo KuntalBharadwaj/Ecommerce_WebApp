@@ -19,7 +19,7 @@ function ProductProvider(props) {
   const fetchProduct = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:4000/api/products");
-	  if(response.data.success === true) setProductList(response.data.data); // Update ProductList with response data
+	  if(response.data.success === true) setProductList(pre=>(response.data.data)); // Update ProductList with response data
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }

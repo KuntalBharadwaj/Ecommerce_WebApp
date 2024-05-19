@@ -1,4 +1,4 @@
-import { AccountBox, Logout } from '@mui/icons-material'
+import { AccountBox, LocalShipping, Logout } from '@mui/icons-material'
 import { Avatar } from '@mui/material'
 import { LoginContext } from '../context/LoginContext'
 import { useContext } from 'react'
@@ -16,6 +16,10 @@ function ProfileSide(props) {
 
   const handlAccount = ()=>{
     props.section.setIsActive("Account") // focusing by div color
+  }
+
+  const handleOrder = ()=>{
+    props.section.setIsActive("Order")
   }
 
   const handlLogout = async()=>{
@@ -47,11 +51,15 @@ function ProfileSide(props) {
       </div>
 
       <div className='bg-white rounded-sm shadow-md'>
-        <div onClick={handlAccount} className={`h-[50px] shadow-sm flex items-center pl-5 cursor-pointer ${(props.section.isActive === "Account")? `bg-[#b69adf64]`:""}`}>
+        <div onClick={handlAccount} className={`h-[50px] shadow-sm flex items-center pl-5 cursor-pointer ${(props.section.isActive === "Account")? `bg-[#c3aaf1ce]`:""}`}>
           <p>Account</p>
           <span className='ml-5'><AccountBox/></span>
         </div>
-        <div onClick={handlLogout} className={`h-[50px] shadow-sm flex items-center pl-5 cursor-pointer ${(props.section.isActive === "Logout")? `bg-[#b69adf64]`:""}`}>
+        <div onClick={handleOrder} className={`h-[50px] shadow-sm flex items-center pl-5 cursor-pointer ${(props.section.isActive === "Order")? `bg-[#c3aaf1c6]`:""}`}>
+          <p>Your Orders</p>
+          <span className='ml-5'><LocalShipping/></span>
+        </div>
+        <div onClick={handlLogout} className={`h-[50px] shadow-sm flex items-center pl-5 cursor-pointer ${(props.section.isActive === "Logout")? `bg-[#c3aaf1c6]`:""}`}>
           <p>Logout</p>
           <span className='ml-5'><Logout/></span>
         </div>

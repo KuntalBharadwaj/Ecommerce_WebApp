@@ -1,16 +1,18 @@
 // AdminPanel.js
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios"
 import AllProducts from "./component/AllProducts";
 import Overview from "./component/Overview";
 import SellerRequest from "./component/SellerRequest";
+import { LoginContext } from "../component/context/LoginContext";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const [activeSection, setActiveSection] = useState("overview");
 
   return (
-    <div className="lg:flex h-screen">
+    <div className="lg:flex min-h-screen">
       <Sidebar setActiveSection={setActiveSection} ActiveSection={activeSection} />
       <div className="flex-grow p-8 relative bg-white m-3 shadow-lg rounded-sm shadow-slate-500">
       {activeSection === "overview" && <div>
@@ -21,9 +23,6 @@ const Admin = () => {
           <div>
             <SellerRequest/>
           </div>}
-        {activeSection === "insertProduct" && <div>
-          {/* <Insert/> */}
-        </div>}
 
         {activeSection === "deleteProduct" && <div><AllProducts/></div>}
         {/* Add more sections as needed */}

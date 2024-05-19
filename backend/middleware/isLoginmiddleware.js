@@ -12,6 +12,7 @@ function authenticateJWT(req, res, next) {
 
         Jwt.verify(token, SECRET_KEY, (err, user) => {
             if (err) {
+                console.log("error in jwt inside")
                 console.log(err)
                 return res.status(403).json({ success: false });
             }
@@ -19,6 +20,7 @@ function authenticateJWT(req, res, next) {
         });
 
     } catch (error) {
+        console.log("error in middleware")
         console.log(error.message)
         res.status(400).json({ success: "false" })
     }

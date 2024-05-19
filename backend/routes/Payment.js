@@ -14,7 +14,6 @@ const razorpay = new Razorpay({
 });
 
 router.post("/orders", async (req, res) => {
-
 	try {
 		const options = {
 			amount: req.body.amount * 100,
@@ -41,7 +40,6 @@ router.post("/orders", async (req, res) => {
 
 router.post("/verify", async (req, res) => {
 	try {
-
 		const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 		const sign = razorpay_order_id + "|" + razorpay_payment_id;
 		const expectedSign = crypto

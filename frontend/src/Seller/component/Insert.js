@@ -103,15 +103,15 @@ function Insert() {
               </div>
 
               <div className="flex flex-col">
-                <label className="font-semibold md:text-lg sm:text-md text:sm mr-6">Top Lavel Catagory:</label>
-                <input type="text" className="bg-slate-200 lg:w-[300px] w-[150px] p-5 lg:h-[50px] h-[30px]" placeholder="Enter Top Lavel Catagory" onChange={(e)=>{setTopCata(e.target.value)}}></input>
+                <label className="font-semibold md:text-lg sm:text-md text:sm mr-6"> Gender:</label>
+                <input type="text" className="bg-slate-200 lg:w-[300px] w-[150px] p-5 lg:h-[50px] h-[30px]" placeholder="Enter the Gender" onChange={(e)=>{setTopCata(e.target.value)}}></input>
               </div>
             </div>
 
             <div className="flex m-4 items-center justify-between">
               <div className="flex flex-col">
-                <label className="font-semibold md:text-lg sm:text-md text:sm">Third Lavel Catagory:</label>
-                <input type="text" className="bg-slate-200 lg:w-[300px] w-[100px] p-5 lg:h-[50px] h-[30px]" placeholder="Enter Third Lavel Catagory" onChange={(e)=>{setThirdCata(e.target.value)}}></input>
+                <label className="font-semibold md:text-lg sm:text-md text:sm">Catagory:</label>
+                <input type="text" className="bg-slate-200 lg:w-[300px] w-[100px] p-5 lg:h-[50px] h-[30px]" placeholder="Enter the Catagory" onChange={(e)=>{setThirdCata(e.target.value)}}></input>
               </div>
 
               <div className="flex flex-col">

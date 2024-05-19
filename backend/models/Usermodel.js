@@ -25,7 +25,13 @@ const UserSchema = new Schema({
 
     Avatar:{
         type: String,
+        default: ""
     },
+    
+    orders: {
+        type: mongoose.Types.ObjectId,
+        default: []
+    }
 })
 
 export const User = mongoose.model("User", UserSchema);

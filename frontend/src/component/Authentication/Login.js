@@ -25,16 +25,14 @@ function Login() {
         {
           email: email,
           password: password,
-          Type: Type
+          role: Type
         },
         { withCredentials: true }
       );
-
       if (data.data.success) {
-        
-        if(data.data.user.Type === 'User') setIsUserLogin(true)
-          if(data.data.user.Type === 'Seller') setIsSellerLogin(true)
-          if(data.data.user.Type === 'Admin') setIsAdminLogin(true)
+        if(data.data.user.role === 'User') setIsUserLogin(true)
+          if(data.data.user.role === 'Seller') setIsSellerLogin(true)
+          if(data.data.user.role === 'Admin') setIsAdminLogin(true)
 
         await setUser(data.data.user);
         navigate(`${from}`);

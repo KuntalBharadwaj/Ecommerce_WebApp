@@ -1,5 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import TablerData from "./TablerData";
+import { Grid } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 function Overview() {
   const [TotalProduct, setTotalProduct] = useState(0);
@@ -14,20 +17,26 @@ function Overview() {
 
   const fetch = async () => {
     const response = await axios.get(
-      "http://127.0.0.1:4000/api/admin/noofproduct"
+      "http://127.0.0.1:4000/api/admin/noofproduct",
+      { withCredentials: true }
     );
 
-    setTotalProduct(response.data.data.TotalProduct);
-    setTotalPending(response.data.data.TotalPending);
-    setTotalSuccessful(response.data.data.TotalSucces);
+    if (response.data.success) {
+      setTotalProduct(response.data.data.TotalProduct);
+      setTotalPending(response.data.data.TotalPending);
+      setTotalSuccessful(response.data.data.TotalSucces);
+    }
   };
 
   const fetch2 = async () => {
     const response = await axios.get(
-      "http://127.0.0.1:4000/api/admin/pending&successProduct"
+      "http://127.0.0.1:4000/api/admin/pending&successProduct",
+      { withCredentials: true }
     );
-    setSucccesfullProduct(response.data.data.Success);
-    setPendingProduct(response.data.data.Pending);
+    if (response.data.success) {
+      setSucccesfullProduct(pre=>(response.data.data.Success));
+      setPendingProduct(pre=>(response.data.data.Pending));
+    }
   };
 
   const handleAccepted = () => {
@@ -40,58 +49,111 @@ function Overview() {
     else setIsopenPending(true);
   };
 
-  const Accept = ()=>{
+  const handConfirm = async (e) => {
     //API call
-  }
+    try {
+      const response = await axios.put("http://127.0.0.1:4000/api/admin/confirmOrder",
+      e,
+      {withCredentials:true})
 
-  const Reject = ()=>{
+      if(response.data.success) {
+        const filterData = pendingProduct.filter(ele=>{
+          return(e !== ele)
+        })
+        
+        setPendingProduct(pre=>(filterData))
+      }
+
+    } catch (error) {
+      console.log(error.message)
+    }
+    
+  };
+
+  const handReject = async (e) => {
     //API call
-  }
+    try {
+      const response = await axios.put("http://127.0.0.1:4000/api/admin/rejectOrder",
+      e,
+      {withCredentials:true})
+
+      if(response.data.status) {
+        const filterData = pendingProduct.filter(ele=>{
+          return(e !== ele)
+        })
+
+        setPendingProduct(pre=>(filterData))
+      }
+
+    } catch (error) {
+      console.log(error.message)
+    }
+
+  };
 
   useEffect(() => {
     fetch();
     fetch2();
-  }, []);
+  },[]);
 
   return (
     <div>
       {IsopenSuccess ? (
-        <div className="w-[80%] bg-blue-400">
-          <h1 onClick={handleAccepted}>Hello Accepted</h1>
-          {SuccessfullProduct.map((e,i) => {
+        <Grid container className="bg-slate-200 pl-4 pt-4">
+        <Grid item xs={11}>
+          {SuccessfullProduct.map((e, i) => {
             return (
-              <div key={i} className="flex mr-4">
-                <p>{e.UserName}</p>
-                <p>{e.product.length}</p>
+              <div key={i} className="mb-5 bg-white shadow-sm shadow-slate-300 p-4 rounded-sm">
+                <TablerData Data={e} />
               </div>
             );
           })}
-          <div>
-              <button onClick={handleAccepted} className="">{`Go Back -->>`} </button>
-            </div>
-        </div>
+        </Grid>
+        <Grid item xs={1}>
+          <div
+            onClick={handleAccepted}
+            className="ml-2 flex justify-center items-center pointer cursor-pointer w-[35px] h-[35px] shadow-sm rounded-md shadow-slate-500 bg-white"
+          >
+            <Close />
+          </div>
+        </Grid>
+      </Grid>
       ) : (
         ""
       )}
 
       {IsopenPending ? (
-        <div className="w-[80%] bg-blue-400">
-          <h1 onClick={handleAccepted}>Hello Accepted</h1>
-            {pendingProduct.map((e,i) => {
+        <Grid container className="bg-slate-200 pl-4 pt-4">
+          <Grid item xs={11}>
+            {pendingProduct.map((e, i) => {
               return (
-                <div key={i} className="flex">
-                  <p className="mr-4">{e.UserName}</p>
-                  <p className="mr-4">{e.product.length}</p>
-                  <p className="">{e.razor}</p>
-                  <button onClick={Accept} className="mr-4">Accept</button>
-                  <button onClick={Reject}>Reject</button>
+                <div key={i} className="mb-5 bg-white shadow-sm shadow-slate-300 p-4 rounded-sm">
+                  <TablerData Data={e} />
+                  <div className="flex mt-2">
+                    <button
+                      onClick={()=>{handConfirm(e)}}
+                     className="w-[100px] h-[35px] rounded-sm text-sm font-bold mr-2 bg-[#d0affd]">
+                      Confirm
+                    </button>
+                    <button
+                      onClick={()=>{handReject(e)}}
+                     className="w-[100px] h-[35px] rounded-sm text-sm font-bold bg-[#d3b5fc]">
+                      Reject
+                    </button>
+                  </div>
                 </div>
               );
             })}
-            <div>
-              <button onClick={handlePending} className="">{`Go Back -->>`} </button>
+          </Grid>
+          <Grid item xs={1}>
+            <div
+              onClick={handlePending}
+              className="ml-2 flex justify-center items-center pointer cursor-pointer w-[35px] h-[35px] shadow-sm rounded-md shadow-slate-500 bg-white"
+            >
+              <Close />
             </div>
-        </div>
+          </Grid>
+        </Grid>
       ) : (
         ""
       )}

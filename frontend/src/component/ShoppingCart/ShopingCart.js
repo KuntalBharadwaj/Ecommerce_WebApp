@@ -10,9 +10,9 @@ import { ProductContext } from '../context/ProductContext';
 
 export default function ShoppingCart() {
 
-  const cartProduct = useSelector(store => store.cart.items)
   const navigate = useNavigate();
-
+  
+  let cartProduct = useSelector(store => store.cart.items)
   const {Totalprice, setTotalprice} = useContext(ProductContext)
 
   const [actualprice, setActualPrice] = useState();
@@ -29,29 +29,30 @@ export default function ShoppingCart() {
   cartProduct.forEach(e => {
     tempActual = tempActual + parseInt(e.price) * e.count
   });
-  if (tempActual !== actualprice) setActualPrice(tempActual)
+  setActualPrice(pre=>(tempActual))
 
   cartProduct.forEach(e => {
     tempDelivery = tempDelivery + 40 * e.count
   });
-  if (tempDelivery !== Delivery) setDelivery(tempDelivery)
+  setDelivery(pre=>(tempDelivery))
 
   cartProduct.forEach(e => {
     tempdiscount = tempdiscount + parseInt(e.price) * e.count - parseInt(e.selling_price) * e.count
   })
-  if (tempdiscount !== discount) setDiscount(tempdiscount)
+  setDiscount(pre=>(tempdiscount))
 
   cartProduct.forEach(e => {
     tempTotal = tempTotal + parseInt(e.selling_price) * e.count
   });
-
-  if (tempTotal !== Totalprice) setTotalprice(tempTotal)
+  setTotalprice(pre=>(tempTotal))
+  
   TotalWithDelivery = Totalprice + Delivery
+  
 }
 
 useEffect(()=>{
   updatingPrice()
-},[])
+},[cartProduct])
 
 
   const dispatch = useDispatch()
@@ -62,16 +63,16 @@ useEffect(()=>{
       await axios.post("http://127.0.0.1:4000/api/user/cart/removecart",
         { _id: item._id },
         { withCredentials: true })
-        updatingPrice()
     } catch (error) {
       console.log(error.message)
     }
 
   }
 
-  const handleRemove = (item) => {
+  const handleRemove = async(item) => {
     removeFromDb(item)
     dispatch(removeitems(item))
+    updatingPrice()
   }
 
 
@@ -81,17 +82,16 @@ useEffect(()=>{
         { _id: item._id },
 
         { withCredentials: true })
-        updatingPrice()
     } catch (error) {
       console.log(error.message)
     }
   }
 
-
-
-  const handleAdd = (item) => {
+  const handleAdd = async (item) => {
     addindb(item)
     dispatch(additems(item))
+    updatingPrice()
+
   }
 
   return (

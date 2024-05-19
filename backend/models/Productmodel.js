@@ -27,8 +27,12 @@ const ProductSchema = new Schema({
 
     thirdLavelCategory:{
         type: String,
+    },
+    
+    Seller_Product_id :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Seller"
     }
-
 })
 
 export const Product = mongoose.model("Product", ProductSchema);

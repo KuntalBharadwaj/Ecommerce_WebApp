@@ -6,6 +6,8 @@ import CartRoute from "../routes/CartInfo.js"
 import AddressInfo from "./AdressInfo.js"
 import Payment from "./Payment.js"
 import dotenv from "dotenv"
+import { Seller } from "../models/Seller.model.js"
+import { Order } from "../models/OrdersModel.js"
 
 dotenv.config()
 
@@ -21,26 +23,38 @@ router.get("/", async(req,res)=>{
 
     try {
         const userData = Jwt.verify(token,SECRET_KEY)
-
         if(!userData) res.status(200).json({success: false})
-
-        const user = await User.findById(userData._id)
-        res.status(200).json({success: true, user: user})
+        
+        let user
+        if(userData.role === 'Seller') user = await Seller.findById(userData._id) 
+        else user = await User.findById(userData._id)
+        if(user) res.status(200).json({success: true, user: user})
+        else res.status(200).json({success: false})
 
     } catch (error) {
         res.status(400).json({success: false, message: error.message})
     }
+})
 
+router.get("/orders/:id",async(req,res)=>{
+    try {
+        const id = req.params.id
+        const data = await Order.find({user_id:id,order:"confirm"})
+        res.json({success:true,data:data})
+    } catch (error) {
+        console.log(error.message)
+        res.json({success: false})
+    }
 })
 
 router.get("/logout",(req,res)=>{
-    
     try {
         res.clearCookie('token',{path:"/", secure:true, sameSite: "none" });
         res.status(200).json({success:true})
 
     } catch (error) {
         console.log(error.message)
+        res.status(200).json({success:false})
     }
 })
 

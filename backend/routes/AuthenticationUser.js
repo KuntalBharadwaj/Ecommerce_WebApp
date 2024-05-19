@@ -22,14 +22,14 @@ router.post("/register", async (req, res) => {
             "UserName": req.body.UserName,
             "Email": req.body.email,
             "Password": SecPass,
-            "Type": req.body.Type
+            "role": req.body.role
         }
         
         const user = await User.findOne({ Email: req.body.email }) 
         const user2 = await Seller.findOne({Email:req.body.email})
 
         if (!user && !user2) {
-            if(userobj.Type == "Seller") Seller.insertMany([userobj])
+            if(userobj.role == "Seller") Seller.insertMany([userobj])
             else User.insertMany([userobj])
             res.json({success: true , message: "User Successfully LoggedIn" })
         }
@@ -46,19 +46,17 @@ router.post("/login", async (req, res) => {
     const userobj = {
         "Email": req.body.email,
         "Password": req.body.password,
-        "Type": req.body.Type
+        "role": req.body.role
     }
     
     try {
-        const user = await User.findOne({ Email: userobj.Email,Type: userobj.Type }) || await Seller.findOne({ Email: userobj.Email,Type: userobj.Type })
-        
+        const user = await User.findOne({ Email: userobj.Email,role: userobj.role }) || await Seller.findOne({ Email: userobj.Email,role: userobj.role })
         if (user) {
             const isvalid = await bcrypt.compare(userobj.Password, user.Password)
             if (isvalid) {
-                
-                const token = Jwt.sign({ email: user.Email, "_id": user._id }, SECRET_KEY)
+                const token = Jwt.sign({ email: user.Email, _id: user._id, role: userobj.role }, SECRET_KEY)
                 res.cookie('token', token, { maxAge: 86400000, httpOnly: true, secure:true, sameSite: "none" },{path:"/"});
-                res.json({success: true , message: "User Successfully Registered", user: user})
+                res.json({success: true , message: "User Successfully LoggedIn", user: user})
             }
 
             else res.json({success: false , message: "Invalid Username or Passsword" })

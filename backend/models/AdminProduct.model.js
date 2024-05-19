@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const SellerRequest = new mongoose.Schema({
+const adminProductSchema = new mongoose.Schema({
     Sname: {
         type: String,
     },
@@ -39,13 +39,9 @@ const SellerRequest = new mongoose.Schema({
     
     status : {
         type: String,
-        default: "pending"
-    },
-    request: {
-        type: String,
-        default: "Adding"
+        default: "false"
     }
 
 })
 
-export const SellerProduct = mongoose.model("SellerProduct", SellerRequest)
+export const AdminProduct = mongoose.model("AdminProduct", adminProductSchema)

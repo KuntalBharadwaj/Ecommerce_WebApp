@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { StarIcon } from '@heroicons/react/20/solid'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { additems } from '../redux/CartSlice'
 import { useDispatch } from 'react-redux'
 import { ProductContext } from "../context/ProductContext"

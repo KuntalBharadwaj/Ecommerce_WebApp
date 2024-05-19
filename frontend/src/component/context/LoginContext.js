@@ -20,16 +20,17 @@ function LoginProvider(props) {
 
       const response = await axios.get("http://127.0.0.1:4000/api/user",
     {withCredentials:true})
-    
+
     if(response.data.success) {
       setUser(response.data.user)
 
-      if(response.data.user.Type === 'User') setIsUserLogin(true)
-      if(response.data.user.Type === 'Seller') setIsSellerLogin(true)
-      if(response.data.user.Type === 'Admin') setIsAdminLogin(true)
+      if(response.data.user.role === 'User') setIsUserLogin(true)
+      if(response.data.user.role === 'Seller') setIsSellerLogin(true)
+      if(response.data.user.role === 'Admin') setIsAdminLogin(true)
     }
       
     } catch (error) {
+      console.log("error in checkLogin")
       console.log(error.message)
     }
     

@@ -30,10 +30,10 @@ app.use(cookieParser())
 
 app.options('*', cors());
 app.use("/api",Authentication)
-app.use("/api/user",authenticateJWT,UserInfo)
 app.use("/api/products",product)
-app.use("/api/admin",Authentication,admin)
-app.use("/api/seller",Authentication,seller)
+app.use("/api/user",authenticateJWT,UserInfo)
+app.use("/api/admin",authenticateJWT,admin)
+app.use("/api/seller",authenticateJWT,seller)
 
 
 // app.get("/api/products", async (req,res)=>{

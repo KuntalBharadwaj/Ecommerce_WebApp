@@ -1,6 +1,5 @@
 import express from "express";
 import { SellerProduct } from "../models/SellerRequest.model.js";
-import { Seller } from "../models/Seller.model.js";
 const router = express.Router();
 
 router.get("/getProduct/:id", async (req, res) => {
@@ -12,6 +11,18 @@ router.get("/getProduct/:id", async (req, res) => {
         res.json({ success: false });
     }
 });
+
+router.put("/removeReq",async(req,res)=>{
+  try {
+    const obj = req.body
+    await SellerProduct.updateOne({_id:obj._id},{status: "pending",request:"remove"})
+    res.json({success:true})
+  } catch (error) {
+    console.log("error in remove Req")
+    console.log(error.message)
+    res.json({success:false})
+  }
+})
 
 router.post("/AddItem", async (req, res) => {
   // console.log(req.body)

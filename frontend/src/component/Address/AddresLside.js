@@ -91,7 +91,9 @@ function AddresLside(props) {
 			{withCredentials:true}
 		);
 
-			if(response.data.success) initPayment(response.data.data);
+			if(response.data.success){
+				initPayment(response.data.data);
+			} 
 			else {
 				setIsPaymenterror(response.data.message)
 				setTimeout(() => {
