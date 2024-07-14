@@ -380,7 +380,7 @@ export default function NavigationBar(props) {
               <div className="ml-4 flex lg:ml-0">
                 <Link to="/">
                   <span className="sr-only">Your Company</span>
-                  <img className="h-8 w-auto" src="https://logo.com/image-cdn/images/kts928pd/production/0089b7ae1ed394f041c5f7929e111c11e8eafe4d-424x421.png?w=1080&q=72" height={"50px"} width={"50px"} alt="" />
+                  <img className="h-8 w-auto" src="https://i.pinimg.com/originals/77/c3/66/77c366436d8bd35fe8b3ce5b8c66992e.png" height={"50px"} width={"50px"} alt="" />
                 </Link>
               </div>
 

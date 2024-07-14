@@ -34,7 +34,7 @@ function Login() {
           if(data.data.user.role === 'Seller') setIsSellerLogin(true)
           if(data.data.user.role === 'Admin') setIsAdminLogin(true)
 
-        await setUser(data.data.user);
+        await setUser(pre=>(data.data.user));
         navigate(`${from}`);
       } else {
         setIsError(data.data.message);

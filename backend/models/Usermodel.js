@@ -19,7 +19,7 @@ const UserSchema = new Schema({
         default: []
     },
 
-    Type: {
+    role: {
         type: String
     },
 
@@ -29,7 +29,7 @@ const UserSchema = new Schema({
     },
     
     orders: {
-        type: mongoose.Types.ObjectId,
+        type: [mongoose.Types.ObjectId],
         default: []
     }
 })

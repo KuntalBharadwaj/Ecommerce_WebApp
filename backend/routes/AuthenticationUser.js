@@ -14,7 +14,6 @@ const router = express.Router()
 router.post("/register", async (req, res) => {
 
     try {
-
         let salt = await bcrypt.genSalt(10)
         let SecPass = await bcrypt.hash(req.body.Password, salt)
 
@@ -27,10 +26,11 @@ router.post("/register", async (req, res) => {
         
         const user = await User.findOne({ Email: req.body.email }) 
         const user2 = await Seller.findOne({Email:req.body.email})
-
-        if (!user && !user2) {
-            if(userobj.role == "Seller") Seller.insertMany([userobj])
-            else User.insertMany([userobj])
+        
+        if (user == null && user2==null) {
+            if(userobj.role == "Seller") await Seller.insertMany([userobj])
+            else await User.insertMany([userobj])
+            // console.log("kjjbjbj")
             res.json({success: true , message: "User Successfully LoggedIn" })
         }
         else res.json({ success: false, message: "User Already Registered" })

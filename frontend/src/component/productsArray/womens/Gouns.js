@@ -7,20 +7,6 @@ const Gouns = [
         "selling_price": 466,
         "price": 999,
         "disscount": "53% off",
-        "size": [
-            {
-                "name": "S",
-                "quantity": 20
-            },
-            {
-                "name": "M",
-                "quantity": 30
-            },
-            {
-                "name": "L",
-                "quantity": 50
-            }
-        ],
         "topLavelCategory": "Woman",
         "secondLavelCategory": "Clothing",
         "thirdLavelCategory": "gown"

@@ -1,6 +1,5 @@
 import express from "express";
 import connectToMongo from "./Database/db.js"
-import { Database } from "./Database/db.js";
 import cors from "cors"
 import Authentication from "./routes/AuthenticationUser.js";
 import product from "./routes/ProductInfo.js"
@@ -18,7 +17,7 @@ dotenv.config()
 
 const corsOptions ={
     origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
+    credentials:true,     
     optionSuccessStatus:200
 }
 

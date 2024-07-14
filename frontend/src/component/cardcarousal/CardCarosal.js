@@ -6,6 +6,7 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeftSharp';
 import ArrowRightIcon from '@mui/icons-material/ArrowRightSharp';
 import { useState, useContext,useEffect} from 'react';
 import { ProductContext } from "../context/ProductContext"
+import './cardCourasal.css'
 
 const responsive = {
     0: { items: 2 },
@@ -62,16 +63,15 @@ function CardCarosal(props) {
     const [ActiveIndex, setActiveIndex] = useState(0)
 
     const slidePrev = () => {
-        setActiveIndex(ActiveIndex - 4);
+        setActiveIndex(pre=>(pre - 4));
     }
     
     const slideNext = () => {
-        setActiveIndex(ActiveIndex + 4);
-        console.log(items)
+        setActiveIndex(pre=>(pre + 4));
     }
 
     const syncActiveIndex = () => {
-        setActiveIndex(ActiveIndex)
+        setActiveIndex(pre=>(ActiveIndex))
     }
 
     return (

@@ -25,6 +25,10 @@ const ProductSchema = new Schema({
         type: String,
     },
 
+    color: {
+        type:String
+    },
+
     thirdLavelCategory:{
         type: String,
     },
