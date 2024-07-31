@@ -6,8 +6,8 @@
 .pnp.js
 .env
 .gitignore
-/frontend/node_modules
-/frontend/.gitignore
+frontend/node_modules
+frontend/.gitignore
 
 # testing
 /coverage
