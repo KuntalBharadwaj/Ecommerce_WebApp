@@ -8,6 +8,8 @@
 /.gitignore
 /frontend/node_modules
 /frontend/.env
+/frontend/.gitignore
+
 
 # testing
 /coverage
