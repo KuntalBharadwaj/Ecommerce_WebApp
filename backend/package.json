@@ -7,6 +7,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.0",
+    "path": "^0.12.7",
     "razorpay": "^2.9.2"
   },
   "name": "ecommercebackend",

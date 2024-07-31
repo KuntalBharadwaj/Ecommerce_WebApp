@@ -11,6 +11,8 @@ import authenticateJWT from "./middleware/isLoginmiddleware.js"
 import dotenv from "dotenv"
 import admin from "./routes/Admin.js"
 import seller from "./routes/Seller.js"
+import path from "path";
+import { fileURLToPath } from 'url';
 
 const app = express()
 dotenv.config()
@@ -26,6 +28,14 @@ app.use(cors(corsOptions));
 
 app.use(cookieParser())
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+app.get("/",(req,res)=>{
+    app.use(express.static(path.resolve(__dirname,"frontend","build")));
+    res.sendFile(path.resolve(__dirname,"frontend","build","index.html"))
+})
 
 app.options('*', cors());
 app.use("/api",Authentication)
