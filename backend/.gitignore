@@ -4,10 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
-.env
-.gitignore
-frontend/node_modules
-frontend/.gitignore
+/.env
+/.gitignore
+/frontend/node_modules
+/frontend/.env
 
 # testing
 /coverage
