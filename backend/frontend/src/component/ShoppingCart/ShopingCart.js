@@ -12,12 +12,11 @@ export default function ShoppingCart() {
   const navigate = useNavigate();
 
   let cartProduct = useSelector((store) => store.cart.items);
-  const { Totalprice, setTotalprice } = useContext(ProductContext);
+  const { Totalprice, setTotalprice, TotalPriceWithDelivery, setTotalPriceWithDelivery} = useContext(ProductContext);
 
   const [actualprice, setActualPrice] = useState();
   const [discount, setDiscount] = useState();
   const [Delivery, setDelivery] = useState();
-  const [TotalPriceWithDelivery, setTotalPriceWithDelivery] = useState(0);
 
   let tempActual = 0;
   let tempDelivery = 0;

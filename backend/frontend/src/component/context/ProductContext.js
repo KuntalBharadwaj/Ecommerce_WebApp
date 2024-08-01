@@ -13,6 +13,7 @@ function ProductProvider(props) {
   const [IsClose, setIsClose] = useState(true)
   const [isdropWoman, setIsdropWoman] = useState(false)
   const [Totalprice, setTotalprice] = useState();
+  const [TotalPriceWithDelivery, setTotalPriceWithDelivery] = useState(0);
 
   const [isPaymentError, setIsPaymenterror] = useState("")
 
@@ -31,7 +32,7 @@ function ProductProvider(props) {
 
 
   return (
-    <ProductContext.Provider value={{ProductList, setProductList, filteredProductList, setfilteredProductList,isdropMen,setIsdropMen,IsClose, setIsClose,isdropWoman, setIsdropWoman,Totalprice, setTotalprice, isPaymentError, setIsPaymenterror}}>
+    <ProductContext.Provider value={{ProductList, setProductList, filteredProductList, setfilteredProductList,isdropMen,setIsdropMen,IsClose, setIsClose,isdropWoman, setIsdropWoman,Totalprice, setTotalprice, isPaymentError, setIsPaymenterror, TotalPriceWithDelivery, setTotalPriceWithDelivery}}>
       {props.children}
     </ProductContext.Provider>
   )

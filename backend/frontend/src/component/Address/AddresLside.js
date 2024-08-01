@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 function AddresLside(props) {
 
-  const {Totalprice, setIsPaymenterror} = useContext(ProductContext)
+  const {Totalprice, setIsPaymenterror, TotalPriceWithDelivery, setTotalPriceWithDelivery} = useContext(ProductContext)
   const {user} = useContext(LoginContext)
 
   const cartProduct = useSelector(store => store.cart.items)
@@ -87,7 +87,7 @@ function AddresLside(props) {
 			}
 			
 			const response = await axios.post(`${window.location.origin}/api/user/payment/orders`, 
-			{ amount: Totalprice },
+			{ amount: (Totalprice >= 500) ? Totalprice: TotalPriceWithDelivery },
 			{withCredentials:true}
 		);
 
