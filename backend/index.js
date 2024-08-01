@@ -50,9 +50,11 @@ app.use("/api/seller",authenticateJWT,seller)
 //     res.send(products)
 // })
 
+const PORT = process.env.PORT || 4000
+
 try {
     connectToMongo()
-    app.listen(4000,(err)=>{
+    app.listen(PORT,(err)=>{
     if(!err) console.log("server start")
 })
     
