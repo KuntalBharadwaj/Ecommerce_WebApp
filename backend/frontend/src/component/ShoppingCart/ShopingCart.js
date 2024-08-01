@@ -17,6 +17,7 @@ export default function ShoppingCart() {
   const [actualprice, setActualPrice] = useState();
   const [discount, setDiscount] = useState();
   const [Delivery, setDelivery] = useState();
+  
 
   let tempActual = 0;
   let tempDelivery = 0;
@@ -205,7 +206,6 @@ export default function ShoppingCart() {
                 <hr className="mt-4 mb-4"></hr>
                 <div className="flex justify-between mt-4 text-lg">
                   <p>Total Price</p>
-                  {console.log(TotalPriceWithDelivery)}
                   {Totalprice >= 500 ? (
                     <p>{`₹${Totalprice}`}</p>
                   ) : (

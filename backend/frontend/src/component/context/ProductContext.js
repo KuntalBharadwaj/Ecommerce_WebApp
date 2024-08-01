@@ -16,11 +16,15 @@ function ProductProvider(props) {
   const [TotalPriceWithDelivery, setTotalPriceWithDelivery] = useState(0);
 
   const [isPaymentError, setIsPaymenterror] = useState("")
+  const [isProductFetched, setIsProductFetched] =  useState(false);
 
   const fetchProduct = async () => {
     try {
       const response = await axios.get(`${window.location.origin}/api/products`);
-	  if(response.data.success === true) setProductList(pre=>(response.data.data)); // Update ProductList with response data
+	  if(response.data.success === true) {
+      setProductList(pre=>(response.data.data)); // Update ProductList with response data
+      setIsProductFetched(true);
+    }
     } catch (error) {
       console.error("Error fetching products:", error.message);
     }
@@ -32,7 +36,7 @@ function ProductProvider(props) {
 
 
   return (
-    <ProductContext.Provider value={{ProductList, setProductList, filteredProductList, setfilteredProductList,isdropMen,setIsdropMen,IsClose, setIsClose,isdropWoman, setIsdropWoman,Totalprice, setTotalprice, isPaymentError, setIsPaymenterror, TotalPriceWithDelivery, setTotalPriceWithDelivery}}>
+    <ProductContext.Provider value={{ProductList, setProductList, filteredProductList, setfilteredProductList,isdropMen,setIsdropMen,IsClose, setIsClose,isdropWoman, setIsdropWoman,Totalprice, setTotalprice, isPaymentError, setIsPaymenterror, TotalPriceWithDelivery, setTotalPriceWithDelivery,isProductFetched}}>
       {props.children}
     </ProductContext.Provider>
   )

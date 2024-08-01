@@ -11,7 +11,7 @@ const arrayCarousel = ["/assets/carosalImage/img1.jpg",
 
 const items = arrayCarousel.map(e => {
     return <div className='mt-2 rounded-md flex justify-center'>
-     <img className="item rounded-md object-center w-[75vw] h-[82vh]" data-value="1" src={e} alt='not found'/>
+     <img className="item rounded-md object-center w-[75vw] h-[32vh] sm:h-[82vh]" data-value="1" src={e} alt='not found'/>
      </div>
 })
 

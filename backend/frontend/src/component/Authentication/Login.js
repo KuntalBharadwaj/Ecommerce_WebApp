@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { LoginContext } from "../context/LoginContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -81,6 +81,9 @@ function Login() {
               <option value="Admin">Admin</option>
               <option value="Seller">Seller</option>
             </select>
+          </div>
+          <div className="mt-2">
+            <Link to={"/register"} className="mt-2 text-sm sm:text-md">Create a new Account !<span className=' text-blue-600'> !Click Here</span></Link>
           </div>
           <button
             type="submit"

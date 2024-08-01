@@ -28,7 +28,7 @@ export default function Items() {
     if(filteredProductList.length < ItemCount+8) setItemCount(pre=>(filteredProductList.length))
     else setItemCount(pre=>(ItemCount+8))
   }
-  console.log(filteredProductList.length)
+  
   return (
     <div className=" bg-white m-1 ml-3 rounded-md shadow-lg shadow-slate-400">
       <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

@@ -21,7 +21,8 @@ export function Women() {
       <div className="relative bg-white">
         <div className="mx-auto max-w-7xl px-8">
           <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
-            <div className="col-start-2 grid grid-cols-2 gap-x-8">
+
+            {/* <div className="col-start-2 grid grid-cols-2 gap-x-8">
               <div className="group relative text-base sm:text-sm">
                 <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                   <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg" alt="Models sitting back to back, wearing Basic Tee in black and bone." className="object-cover object-center" />
@@ -42,20 +43,21 @@ export function Women() {
                 </Link>
                 <p aria-hidden="true" className="mt-1">Shop now</p>
               </div>
-            </div>
+            </div> */}
+
             <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
               <div>
                 <p id="Clothing-heading" className="font-medium text-gray-900">Clothing</p>
                 <ul aria-labelledby="Clothing-heading" className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
                   <li className="flex">
-                    <Link to="/product/Saree" onClick={handleLink} className="hover:text-gray-800">Saree </Link>
+                    <Link to="/product/saree" onClick={handleLink} className="hover:text-gray-800">Saree </Link>
                   </li>
                   <li className="flex">
-                    <Link to="/product/gown" onClick={handleLink} className="hover:text-gray-800">Gowns </Link>
+                    <Link to="product/gown" onClick={handleLink} className="hover:text-gray-800">Gowns </Link>
                   </li>
                 </ul>
               </div>
-              <div>
+              {/* <div>
                 <p id="Accessories-heading" className="font-medium text-gray-900">Accessories</p>
                 <ul aria-labelledby="Accessories-heading" className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
                   <li className="flex">
@@ -77,7 +79,7 @@ export function Women() {
                     <Link to="/" onClick={handleLink} className="hover:text-gray-800">Belts</Link>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -114,7 +116,7 @@ export function Men() {
                   </li>
                 </ul>
               </div>
-              <div>
+              {/* <div>
                 <p id="Accessories-heading" className="font-medium text-gray-900">Accessories</p>
                 <ul aria-labelledby="Accessories-heading" className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
                   <li className="flex">
@@ -136,7 +138,7 @@ export function Men() {
                     <Link to="/" onClick={handlLink} className="hover:text-gray-800">Belts</Link>
                   </li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -216,35 +218,14 @@ export default function NavigationBar(props) {
                       <p id="women-clothing-heading-mobile" className="font-medium text-gray-900">Clothing</p>
                       <ul aria-labelledby="women-clothing-heading-mobile" className="mt-6 flex flex-col space-y-6">
                         <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Tops</Link>
+                          <Link to="/product/saree" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Saree</Link>
                         </li>
                         <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Dresses</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Pants</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Denim</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Sweaters</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">T-Shirts</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Jackets</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Activewear</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Browse All</Link>
+                          <Link to="/product/gown" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Gowns</Link>
                         </li>
                       </ul>
                     </div>
-                    <div>
+                    {/* <div>
                       <p id="women-accessories-heading-mobile" className="font-medium text-gray-900">Accessories</p>
                       <ul aria-labelledby="women-accessories-heading-mobile" className="mt-6 flex flex-col space-y-6">
                         <li className="flow-root">
@@ -266,7 +247,7 @@ export default function NavigationBar(props) {
                           <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Belts</Link>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div> : ""
                 }
 
@@ -283,21 +264,9 @@ export default function NavigationBar(props) {
                         <li className="flow-root">
                           <Link to="/product/Shoes" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Shoes</Link>
                         </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Sweaters</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">T-Shirts</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Jackets</Link>
-                        </li>
-                        <li className="flow-root">
-                          <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Activewear</Link>
-                        </li>
                       </ul>
                     </div>
-                    <div>
+                    {/* <div>
                       <p id="men-accessories-heading-mobile" className="font-medium text-gray-900">Accessories</p>
                       <ul aria-labelledby="men-accessories-heading-mobile" className="mt-6 flex flex-col space-y-6">
                         <li className="flow-root">
@@ -319,7 +288,7 @@ export default function NavigationBar(props) {
                           <Link to="/" onClick={handlClickistrue} className="-m-2 block p-2 text-gray-500">Belts</Link>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div> : ""
                 }
               </div>
@@ -330,15 +299,15 @@ export default function NavigationBar(props) {
                 </div>
               </div>
 
-              {(isUserLogin) ?
+              {(!isUserLogin) ?
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <Link to="/" className="-m-2 block p-2 font-medium text-gray-900">Sign in</Link>
+                    <Link to="/login" className="-m-2 block p-2 font-medium text-gray-900">Sign in</Link>
                   </div>
                   <div className="flow-root">
-                    <Link to="/" className="-m-2 block p-2 font-medium text-gray-900">Create account</Link>
+                    <Link to="/register" className="-m-2 block p-2 font-medium text-gray-900">Create account</Link>
                   </div>
-                </div> : <div className=' text-lg text-black space-y-6 px-4 py-2'><NavLink to={"/"}>Profile</NavLink></div>
+                </div> : <div className=' text-lg text-black space-y-6 px-4 py-2'><NavLink to={"/profile"}>Profile</NavLink></div>
               }
 
             </div>
@@ -360,10 +329,9 @@ export default function NavigationBar(props) {
               </button>
 
               {/* <!-- Logo --> */}
-              <div className="ml-4 flex lg:ml-0">
+              <div className="ml-1 flex lg:ml-0">
                 <Link to="/">
-                  <span className="sr-only">Your Company</span>
-                  <img className="h-8 w-auto" src="https://i.pinimg.com/originals/77/c3/66/77c366436d8bd35fe8b3ce5b8c66992e.png" height={"50px"} width={"50px"} alt="" />
+                  <img className="h-[20px] sm:h-[27px] w-auto" src="https://i.pinimg.com/originals/77/c3/66/77c366436d8bd35fe8b3ce5b8c66992e.png" alt="" />
                 </Link>
               </div>
 
@@ -405,8 +373,8 @@ export default function NavigationBar(props) {
 
               {/* <!-- Search --> */}
               <div className='mx-auto relative'>
-                <div className='flex'>
-                  <input type='text' className='w-[150px] md:w-[370px] lg:h-10 rounded-sm p-3 bg-slate-200' placeholder='Search Anything you want' onChange={(e) => setSearchText(e.target.value)}></input>
+                <div className='flex items-center'>
+                  <input type='text' className='w-[150px] h-[15px] md:w-[370px] lg:h-10 rounded-sm p-3 bg-slate-200' placeholder='Search Anything you want' onChange={(e) => setSearchText(e.target.value)}></input>
                   <div className=" p-2 text-gray-400 hover:text-gray-500" onClick={handlSearch}>
                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -432,7 +400,7 @@ export default function NavigationBar(props) {
                     <Link to="/login" state={window.location.pathname} className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</Link>
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true"></span>
                     <Link to="/register" className="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</Link>
-                  </div> : <NavLink to={"/profile"}><div className='text-sm w-[30px] h-[30px] md:w-[40px] md:h-[40px] flex justify-center items-center lg:text-lg text-black space-y-6 bg-slate-400 rounded-full'>{(user)? user.UserName[0] : ""}</div></NavLink>
+                  </div> : <NavLink to={"/profile"}><div className=' hidden text-sm w-[30px] h-[30px] md:w-[40px] md:h-[40px] sm:flex justify-center items-center lg:text-lg text-black space-y-6 bg-slate-400 rounded-full'>{(user)? user.UserName[0] : ""}</div></NavLink>
                 }
 
 

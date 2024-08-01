@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Register() {
 
@@ -37,12 +37,15 @@ function Register() {
             <input type='password' name='password' placeholder='Enter your Password' required onChange={(e)=>{setPassword(e.target.value)}} className='pl-2 w-[300px] h-[45px] my-3 bg-slate-300'></input>
             <button type='submit' className='w-[300px] h-[45px] my-2 bg-purple-500' onClick={handleSubmit}>Submit</button>
             <div className="flex justify-around mt-3 mb-3 ">
-            <label htmlFor="select" className="mr-5">Login As a</label>
+            <label htmlFor="select" className="mr-5">SignUp As a</label>
             <select id="select" className="border border-black" value={Type} onChange={(e)=>{setType(e.target.value)}}>
               <option value="User">User</option>
               <option value="Admin">Admin</option>
               <option value="Seller">Seller</option>
             </select>
+          </div>
+          <div>
+            <Link to={"/login"} className="text-sm sm:text-md">Already have an Account<span className=' text-blue-600'> !Click Here</span></Link>
           </div>
 
             {(isError !== "")?
