@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 let Database
 async function connectToMongo(){
-    Database = await mongoose.connect("mongodb+srv://group_Project:G1234@cluster0.rgflqb4.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0"). //mongodb+srv://group_Project:G1234@cluster0.rgflqb4.mongodb.net/products?retryWrites=true&w=majority&appName=Cluster0
+    Database = await mongoose.connect(process.env.MONGO_URI).
     then((data)=>{
         console.log("connected to database")
         return data
