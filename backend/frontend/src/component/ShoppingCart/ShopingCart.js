@@ -95,9 +95,9 @@ export default function ShoppingCart() {
   };
 
   const handleAdd = async (item) => {
-    addindb(item);
-    dispatch(additems(item));
-    updatingPrice();
+    await addindb(item);
+    await dispatch(additems(item));
+    await updatingPrice();
   };
 
   return (

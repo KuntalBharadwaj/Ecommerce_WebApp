@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
@@ -11,14 +11,6 @@ const sortOptions = [
   { name: 'Newest', href: '#', current: false },
   { name: 'Price: Low to High', href: '#', current: false },
   { name: 'Price: High to Low', href: '#', current: false },
-]
-
-const subCategories = [
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
-  { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
 ]
 
 const filters = [
@@ -34,6 +26,7 @@ const filters = [
       { value: 'Purple', label: 'Purple', checked: false },
     ],
   },
+  
   {
     id: 'Discount',
     name: 'disscount',
@@ -53,6 +46,13 @@ function classNames(...classes) {
 
 export default function Sidebar() {
 
+  const [filterData,setFilterData] = useState(filters)
+  // const history = useHistory();
+
+  useEffect(()=>{
+    setFilterData(filters)
+  },[])
+
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [filterObj, setFilterObj] = useState({
     "color": [],
@@ -65,6 +65,15 @@ export default function Sidebar() {
 
   const location = useLocation()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    // Remove query string if it exists
+    if (location.search) {
+      navigate(location.pathname, { replace: true });
+    }
+  }, []);
+
+
   // console.log(sideFilterProduct)
 
 
@@ -77,22 +86,37 @@ export default function Sidebar() {
       return (e.thirdLavelCategory === catagory || e.title.includes(catagory))
     })
     // console.log(filterObj)
+
     let finalProduct = []
     ProductArray.forEach (e=>{
         for(let ele in filterObj) {
           // console.log(filterObj[ele],e.color)
           if(ele === "color") if(filterObj[ele].includes(e.color)) finalProduct.push(e)
-          if(ele === "Disscount") {
+          if(ele === "disscount") {
             filterObj[ele].forEach(elee=>{
-              if(e.disscount >= elee) finalProduct.push(e)
+              if(!finalProduct.includes(e) && e.disscount >= elee) finalProduct.push(e)
             })
           }
         }
     })
-    setfilteredProductList(finalProduct)
-  }
 
-  const handFliterClick = (value, sectionId) => {
+    if(filterObj.color.length!=0 || filterObj.disscount.length!=0) setfilteredProductList(pre=>finalProduct)
+    else {
+      let filterProduct = ProductList.filter(e=>{
+        return (e.thirdLavelCategory == catagory) 
+      })
+      setfilteredProductList(pre=>filterProduct)
+    }
+  }
+  
+  const handFliterClick = (value, sectionId, Optionindex, sectionIndex) => {
+
+    const filterDataFilter = filterData;
+    if(filterDataFilter[sectionIndex].options[Optionindex].checked) filterDataFilter[sectionIndex].options[Optionindex].checked = false;
+    else filterDataFilter[sectionIndex].options[Optionindex].checked = true
+
+    setFilterData(pre=>filterData);
+
     const searchParms = new URLSearchParams(location.search)
     let paramData = searchParms.getAll(sectionId)
 
@@ -105,10 +129,10 @@ export default function Sidebar() {
         }
 
         else {
-          let filterData = paramData[0].split(",").filter(e => {
+          let filterDataFromparam = paramData[0].split(",").filter(e => {
             return (e !== value)
           })
-          searchParms.set(sectionId, filterData.join(","))
+          searchParms.set(sectionId, filterDataFromparam.join(","))
         }
       }
       else {
@@ -132,12 +156,12 @@ export default function Sidebar() {
 
       let obj = filterObj
       obj[sectionId] = tempArray
-      setFilterObj(obj)
+      setFilterObj(pre=>obj)
     }
     else {
       let obj = filterObj
       obj[sectionId].push(value);
-      setFilterObj(obj)
+      setFilterObj(pre=>obj)
     }
   }
 
@@ -184,7 +208,7 @@ export default function Sidebar() {
 
                   {/* Filters for mobile */}
                   <form className="mt-4 border-t border-gray-200">
-                    {filters.map((section) => (
+                    {filterData.map((section,sectionIndex) => (
                       <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
                         {({ open }) => (
                           <>
@@ -206,7 +230,7 @@ export default function Sidebar() {
                                   <div key={option.value} className="flex items-center">
                                     <input
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
-                                      onChange={() => { handFliterClick(option.value, section.name) }}
+                                      onChange={() => { handFliterClick(option.value, section.name, optionIdx,sectionIndex) }}
                                       name={`${section.id}[]`}
                                       defaultValue={option.value}
                                       type="checkbox"
@@ -240,14 +264,15 @@ export default function Sidebar() {
         <main className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-400 pb-6 pt-3 lg:pt-14">
             <h1 className="lg:text-3xl md:text-4xl sm:text-2xl font-bold tracking-tight text-gray-900">Filter</h1>
-
+            <div className='lg:hidden w-[20px] h-auto' onClick={()=>{setMobileFiltersOpen(true)}}>
+                <FunnelIcon/>
           </div>
-
+          </div>
           <section aria-labelledby="products-heading" className="pb-20 pt-6">
             <div>
               {/* Filters */}
               <form className="hidden lg:block">
-                {filters.map((section) => (
+                {filterData.map((section,sectionIndex) => (
                   <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
                     {({ open }) => (
                       <>
@@ -268,7 +293,7 @@ export default function Sidebar() {
                             {section.options.map((option, optionIdx) => (
                               <div key={option.value} className="flex items-center">
                                 <input
-                                  onChange={() => { handFliterClick(option.value, section.name) }}
+                                  onChange={() => { handFliterClick(option.value, section.name, optionIdx, sectionIndex) }}
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
